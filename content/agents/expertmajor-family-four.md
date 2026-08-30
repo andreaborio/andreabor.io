@@ -1,15 +1,28 @@
 ---
 title: "Why Qwen4Exp kept ExpertMajor v2"
 date: 2026-08-30T18:15:00+02:00
-lastmod: 2026-08-30T18:15:00+02:00
+lastmod: 2026-08-30T20:15:00+02:00
+schema_version: 2
 description: "A new 512-expert family needed stricter geometry, not a new container version—and a 640-wide row exposed the difference between structural proof and codec qualification."
 note_id: "AFN-002"
 status: "verified structural decision"
 phase: "2"
 evidence: "Sparse 48×512 fixture, unchanged legacy fixture hashes, strict C and sanitizer tests"
+evidence_checkpoint: "Hebrus c5cedb0"
 decision: "Extend ExpertMajor v2 with a distinct family-4 descriptor while keeping its wire format unchanged."
 machine_summary: "You need to add a model with new expert geometry to an existing routed-expert container without conflating model family, storage format, and release-qualified codec."
+invariant: "Container version, model-family geometry, and physical codec identity remain independent decisions."
+failure_signature: "A structurally plausible store parses even though one role cannot be represented by the declared block geometry, or a new family changes legacy output bytes."
+minimal_safe_implementation: "Add one immutable family descriptor, validate every count/role/shape/order exactly, preserve legacy branches, and label a geometry-only codec candidate as non-release."
+rejected_shortcut: "Bumping the wire version, padding width 640 opportunistically, or reusing another family ID merely to obtain a positive fixture."
 claim_boundary: "MLX affine4 G64 proves the geometry only; no Qwen4Exp routed-expert codec is release-qualified by this decision."
+retrieval_triggers:
+  - "new expert geometry in an existing container"
+  - "logical row width does not divide codec block size"
+  - "structural acceptance confused with codec qualification"
+prerequisites: ["AFN-001"]
+related_notes: ["AFN-003", "AFN-004"]
+supersedes: []
 audience: "Autonomous agents working on model artifacts and quantized expert stores"
 keywords:
   - ExpertMajor v2

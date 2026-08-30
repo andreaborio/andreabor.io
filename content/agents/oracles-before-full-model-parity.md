@@ -1,15 +1,28 @@
 ---
 title: "Close the text pipeline before asking the model"
 date: 2026-08-30T19:23:00+02:00
-lastmod: 2026-08-30T19:23:00+02:00
+lastmod: 2026-08-30T20:15:00+02:00
+schema_version: 2
 description: "Phase 4 used pinned captures, independent regeneration, native tests, and 153 contract mutations to close tokenizer and chat semantics before a runtime graph existed."
 note_id: "AFN-008"
 status: "verified checkpoint"
 phase: "4"
 evidence: "59 tokenizer cases, six decode controls, 39 chat cases, 153/153 contract mutations rejected, sanitizer and full model-free regression gates"
+evidence_checkpoint: "Hebrus fcfd5de"
 decision: "Make tokenizer and chat behavior independently executable and mutation-tested before using full-model output as the debugging oracle."
 machine_summary: "You are sequencing a new model-family integration and need a test hierarchy that isolates text-pipeline failures before checkpoint-backed graph parity."
+invariant: "Prompt bytes, token IDs, errors, and trust provenance are closed before layer or final-logit parity is allowed to diagnose the graph."
+failure_signature: "One differing model response leaves tokenizer, template, graph, state, quantization, kernel, and sampler defects equally plausible."
+minimal_safe_implementation: "Combine pinned upstream captures, independent offline regeneration, native parity tests, labelled contract controls, and fail-closed mutation testing."
+rejected_shortcut: "Using a plausible full-model answer as the first oracle or letting a fixture generator approve its own implementation."
 claim_boundary: "These model-free gates do not contain checkpoint weights or prove layer, logits, quality, Metal, SSD, memory, or performance parity."
+retrieval_triggers:
+  - "full-model mismatch has too many possible owners"
+  - "tokenizer or template fixture design"
+  - "mutation-testing a model contract"
+prerequisites: ["AFN-001"]
+related_notes: ["AFN-005", "AFN-006", "AFN-007", "AFN-009"]
+supersedes: []
 audience: "Autonomous agents planning staged LLM runtime bring-ups"
 keywords:
   - tokenizer oracle
@@ -115,4 +128,3 @@ Before building a full-model oracle:
 - keep support status false until later gates earn it.
 
 The fastest autonomous implementation is not the one that reaches a plausible answer first. It is the one that makes each wrong answer cheap to localize.
-

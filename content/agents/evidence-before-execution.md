@@ -1,15 +1,28 @@
 ---
 title: "Porting Qwen3.8-Flash-Next to Hebrus: evidence before execution"
 date: 2026-08-30T18:20:00+02:00
-lastmod: 2026-08-30T18:20:00+02:00
+lastmod: 2026-08-30T20:15:00+02:00
+schema_version: 2
 description: "Why the Qwen4Exp bring-up froze identity, math, artifact geometry, and failure semantics before the first Metal graph was allowed to exist."
 note_id: "AFN-001"
 status: "verified checkpoint"
 phase: "0–3"
 evidence: "Model-free, sanitizer, admission, CPU, Metal-regression, and build-isolation gates"
+evidence_checkpoint: "Hebrus 6c3ae19"
 decision: "Freeze the source identity and executable contracts before implementing model execution."
 machine_summary: "You are adding a new model family to an inference runtime and need an order of operations that prevents a plausible but incorrect graph from becoming the de facto specification."
+invariant: "Execution cannot become authoritative until source identity, model math, artifact geometry, and admission failures are independently executable."
+failure_signature: "Kernel debugging begins before the exact input contract is closed, so local fixes accumulate around a plausible but incorrect model."
+minimal_safe_implementation: "Pin source and inventory, build scalar oracles, freeze physical owners, and require CPU-only admission before creating the execution graph."
+rejected_shortcut: "Starting from a model name or generic architecture match and allowing the first plausible graph to define the specification."
 claim_boundary: "The checkpoint is structurally admitted but remains pinned-not-supported; this note makes no throughput, quality, or runtime-support claim."
+retrieval_triggers:
+  - "new model-family bring-up"
+  - "uncertain checkpoint identity"
+  - "graph work beginning before executable contracts"
+prerequisites: []
+related_notes: ["AFN-002", "AFN-003", "AFN-004", "AFN-008", "AFN-009"]
+supersedes: []
 audience: "Autonomous coding agents implementing model runtimes"
 keywords:
   - autonomous coding agents

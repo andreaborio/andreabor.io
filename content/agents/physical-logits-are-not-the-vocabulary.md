@@ -1,15 +1,28 @@
 ---
 title: "A logits matrix is not always the vocabulary"
 date: 2026-08-30T19:20:00+02:00
-lastmod: 2026-08-30T19:20:00+02:00
+lastmod: 2026-08-30T20:15:00+02:00
+schema_version: 2
 description: "Qwen4Exp exposes 248,320 output rows but only 248,077 valid token IDs; collapsing those domains creates invalid sampling and ambiguous decoding."
 note_id: "AFN-005"
 status: "verified checkpoint"
 phase: "4"
 evidence: "Pinned tokenizer backend, 59 encode/decode cases, six boundary controls, sampler-boundary test, and the Phase 4 model-free gate"
+evidence_checkpoint: "Hebrus fcfd5de"
 decision: "Represent the tokenizer domain and the physical logits width as separate constants, masking every unassigned output row before sampling."
 machine_summary: "You are integrating a checkpoint whose output projection is padded beyond the tokenizer vocabulary and need exact rules for sampling, decoding, stopping, and artifact admission."
+invariant: "The graph admits 248,320 physical rows while sampling remains restricted to token IDs in [0, 248077)."
+failure_signature: "An unassigned padded row wins selection and is clamped, decoded ambiguously, or misinterpreted as a stop token."
+minimal_safe_implementation: "Store physical width and semantic vocabulary separately, mask every invalid row before selection, and test with invalid rows numerically dominant."
+rejected_shortcut: "Using one n_vocab value to answer tensor shape, sampling validity, decode behavior, and stop semantics."
 claim_boundary: "This closes the text-domain semantics only; it does not prove full-model logits parity, generation quality, or runtime support."
+retrieval_triggers:
+  - "output rows exceed tokenizer vocabulary"
+  - "padded logits produce invalid IDs"
+  - "sampling and decode boundaries disagree"
+prerequisites: ["AFN-001"]
+related_notes: ["AFN-004", "AFN-008"]
+supersedes: []
 audience: "Autonomous agents implementing tokenizers, samplers, and model loaders"
 keywords:
   - padded logits
@@ -101,4 +114,3 @@ When a checkpoint uses a padded output projection:
 - test with invalid rows deliberately made numerically dominant.
 
 The broader lesson is simple: tensor geometry tells a runtime what it must compute. A tokenizer contract tells it what those results are allowed to mean.
-

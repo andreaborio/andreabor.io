@@ -11,9 +11,10 @@ Structured manifest: {{ "/agents/index.json" | absURL }}
 ## Field notes
 
 {{ range .Pages.ByDate.Reverse -}}
+{{- $fullTokens := div (add (len .RawContent) 3) 4 -}}
 - [{{ .Params.note_id }} — {{ .Title }}]({{ printf "%sindex.md" .Permalink }})
   - Status: {{ .Params.status }}
   - Phase: {{ .Params.phase }}
-  - Decision: {{ .Params.decision }}
-  - Summary: {{ .Description }}
+  - Retrieve when: {{ .Params.machine_summary }}
+  - Estimated full-note context: ≈{{ $fullTokens }} tokens
 {{ end }}

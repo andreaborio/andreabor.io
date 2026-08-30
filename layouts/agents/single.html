@@ -1,4 +1,8 @@
 {{ define "main" }}
+  {{ partial "agent-note-validate.html" . }}
+  {{ $capsuleChars := add 140 (len .Params.machine_summary) (len .Params.decision) (len .Params.invariant) (len .Params.failure_signature) (len .Params.minimal_safe_implementation) (len .Params.rejected_shortcut) (len .Params.evidence) (len .Params.claim_boundary) }}
+  {{ $capsuleTokens := div (add $capsuleChars 3) 4 }}
+  {{ $fullTokens := div (add (len .RawContent) 3) 4 }}
   <article class="agent-note" itemscope itemtype="https://schema.org/TechArticle">
     <header class="agent-note-header">
       <div class="agent-note-topline">
@@ -16,10 +20,24 @@
     </header>
 
     <aside class="agent-briefing" aria-labelledby="agent-briefing-title">
-      <p class="agent-briefing-label" id="agent-briefing-title">Machine briefing</p>
-      <p><strong>Decision:</strong> {{ .Params.decision }}</p>
-      <p><strong>Use this note when:</strong> {{ .Params.machine_summary }}</p>
-      <p><strong>Claim boundary:</strong> {{ .Params.claim_boundary }}</p>
+      <div class="agent-briefing-heading">
+        <p class="agent-briefing-label" id="agent-briefing-title">Retrieval capsule</p>
+        <p class="agent-context-cost">≈{{ $capsuleTokens }} tokens · full note ≈{{ $fullTokens }}</p>
+      </div>
+      <dl class="agent-recovery-grid">
+        <div><dt>Retrieve when</dt><dd>{{ .Params.machine_summary }}</dd></div>
+        <div><dt>Decision</dt><dd>{{ .Params.decision }}</dd></div>
+        <div><dt>Invariant</dt><dd>{{ .Params.invariant }}</dd></div>
+        <div><dt>Failure signature</dt><dd>{{ .Params.failure_signature }}</dd></div>
+        <div><dt>Minimal safe implementation</dt><dd>{{ .Params.minimal_safe_implementation }}</dd></div>
+        <div><dt>Rejected shortcut</dt><dd>{{ .Params.rejected_shortcut }}</dd></div>
+        <div><dt>Evidence</dt><dd>{{ .Params.evidence }} · {{ .Params.evidence_checkpoint }}</dd></div>
+        <div><dt>Claim boundary</dt><dd>{{ .Params.claim_boundary }}</dd></div>
+      </dl>
+      <div class="agent-trigger-row">
+        <strong>Retrieval triggers:</strong>
+        {{ delimit .Params.retrieval_triggers " · " }}
+      </div>
     </aside>
 
     <div class="prose agent-prose" itemprop="articleBody">{{ .Content }}</div>
@@ -32,6 +50,8 @@
         <a href="{{ "/agents/llms-full.txt" | relURL }}">Full corpus</a> ·
         <a href="{{ "/agents/index.json" | relURL }}">JSON manifest</a>
       </p>
+      <p><strong>Prerequisites:</strong> {{ if .Params.prerequisites }}{{ delimit .Params.prerequisites ", " }}{{ else }}none{{ end }}</p>
+      <p><strong>Related notes:</strong> {{ if .Params.related_notes }}{{ delimit .Params.related_notes ", " }}{{ else }}none{{ end }}</p>
     </footer>
     <meta itemprop="author" content="Andrea Borio">
   </article>

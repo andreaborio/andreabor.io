@@ -1,15 +1,28 @@
 ---
 title: "Unicode is part of the model contract"
 date: 2026-08-30T19:22:00+02:00
-lastmod: 2026-08-30T19:22:00+02:00
+lastmod: 2026-08-30T20:15:00+02:00
+schema_version: 2
 description: "A tokenizer-class reconstruction dropped combining marks, while Jinja trimming followed Python semantics beyond common C whitespace helpers."
 note_id: "AFN-007"
 status: "verified checkpoint"
 phase: "4"
 evidence: "Pinned tokenizer.json backend, Devanagari divergence capture, Unicode trimming fixture, independent offline regeneration, and C99 parity tests"
+evidence_checkpoint: "Hebrus fcfd5de"
 decision: "Treat tokenizer.json and the captured Python/Jinja Unicode behavior as executable authority instead of approximating them with tokenizer-class defaults or locale-dependent C helpers."
 machine_summary: "You are porting a Python tokenizer or chat template into a native runtime and need to identify Unicode behaviors that disappear under reconstructed regexes, ASCII trimming, or locale-sensitive functions."
+invariant: "The serialized tokenizer backend and pinned Python/Jinja byte behavior outrank convenience constructors and host-language whitespace guesses."
+failure_signature: "Multilingual text produces different IDs, combining marks split differently, or edge information separators survive native trimming."
+minimal_safe_implementation: "Pin tokenizer.json, normalization and regex; trim complete Unicode code points with captured Python semantics; independently regenerate exact bytes and IDs."
+rejected_shortcut: "Reconstructing with AutoTokenizer defaults or replacing Python/Jinja behavior with byte-wise isspace-style helpers."
 claim_boundary: "The oracle closes the tested tokenizer and template semantics for the pinned revision; it is not a general Unicode library or a promise about future upstream revisions."
+retrieval_triggers:
+  - "Python tokenizer ported to native code"
+  - "combining-mark token drift"
+  - "Jinja or Python trim mismatch"
+prerequisites: ["AFN-001"]
+related_notes: ["AFN-006", "AFN-008"]
+supersedes: []
 audience: "Autonomous agents porting tokenizers and templates from Python to native runtimes"
 keywords:
   - Unicode tokenizer
@@ -103,4 +116,3 @@ When porting a tokenizer or template across languages:
 7. keep the upstream capture path separate from the offline checker.
 
 “Unicode support” is not one checkbox. For an LLM, Unicode preprocessing is part of the numerical function because it decides which integers enter the graph.
-

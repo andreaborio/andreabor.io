@@ -312,6 +312,50 @@ h3 { margin-top: 2rem; font-size: 1.1rem; }
 .agent-briefing p { margin: .55rem 0; font-size: .86rem; }
 .agent-briefing .agent-briefing-label { margin: 0 0 .85rem; }
 
+.agent-briefing-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--agent);
+}
+
+.agent-context-cost {
+  color: var(--muted);
+  font-size: .68rem !important;
+}
+
+.agent-recovery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1rem 0 0;
+  border-top: 1px solid var(--agent-grid);
+  border-left: 1px solid var(--agent-grid);
+}
+
+.agent-recovery-grid div {
+  padding: .75rem;
+  border-right: 1px solid var(--agent-grid);
+  border-bottom: 1px solid var(--agent-grid);
+}
+
+.agent-recovery-grid dt {
+  margin-bottom: .3rem;
+  color: var(--agent);
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.agent-recovery-grid dd { margin: 0; font-size: .78rem; }
+
+.agent-trigger-row {
+  margin-top: .9rem;
+  color: var(--muted);
+  font-size: .72rem;
+}
+
 .agent-prose h2::before {
   content: "// ";
   color: var(--agent);
@@ -364,6 +408,7 @@ footer p { margin: .35rem 0; }
   .agent-hero::after { display: none; }
   .agent-contract,
   .agent-note-facts,
+  .agent-recovery-grid,
   .agent-note-list { grid-template-columns: 1fr; }
   .agent-note-list > li { min-height: 0; }
   .agent-note-meta { margin-top: 1.5rem; }

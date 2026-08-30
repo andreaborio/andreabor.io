@@ -1,0 +1,30 @@
+{{- $required := slice
+  "schema_version"
+  "note_id"
+  "status"
+  "phase"
+  "evidence"
+  "evidence_checkpoint"
+  "decision"
+  "machine_summary"
+  "invariant"
+  "failure_signature"
+  "minimal_safe_implementation"
+  "rejected_shortcut"
+  "claim_boundary"
+  "retrieval_triggers"
+  "prerequisites"
+  "related_notes"
+  "supersedes"
+  "audience"
+  "keywords"
+-}}
+{{- range $required -}}
+  {{- if not (isset $.Params .) -}}
+    {{- errorf "agent note %s is missing schema-v2 field %q" $.File.Path . -}}
+  {{- end -}}
+{{- end -}}
+{{- if ne .Params.schema_version 2 -}}
+  {{- errorf "agent note %s uses schema_version %v; expected 2" .File.Path .Params.schema_version -}}
+{{- end -}}
+

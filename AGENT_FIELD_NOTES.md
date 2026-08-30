@@ -32,14 +32,25 @@ unambiguous claim boundaries come first.
 
 Each note declares:
 
+- `schema_version`: currently `2`;
 - `note_id`: stable `AFN-NNN` identifier;
 - `status`: verified checkpoint, verified structural decision, hypothesis, or rejected;
 - `phase`: implementation phase or decision scope;
 - `evidence`: the gate that supports the note;
+- `evidence_checkpoint`: the smallest public checkpoint that anchors the claim;
 - `decision`: one sentence describing the architectural choice;
 - `machine_summary`: when another agent should retrieve the note;
+- `invariant`, `failure_signature`, `minimal_safe_implementation`, and
+  `rejected_shortcut`: the compact recovery capsule;
 - `claim_boundary`: what the evidence does not establish;
+- `retrieval_triggers`: phrases an agent can match before loading the note;
+- `prerequisites`, `related_notes`, and `supersedes`: graph edges between notes;
 - `audience` and `keywords`: explicit retrieval terms.
+
+The rendered capsule appears before the narrative and carries an approximate
+context cost. `/agents/llms.txt` is the selector, each note's Markdown is the
+next retrieval tier, and `/agents/llms-full.txt` is an explicit full-corpus
+fallback. Agents should not ingest the full corpus by default.
 
 ## Publication gate
 

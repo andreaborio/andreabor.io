@@ -1,15 +1,28 @@
 ---
 title: "Rendered chat is not a flat string: preserve provenance"
 date: 2026-08-30T19:21:00+02:00
-lastmod: 2026-08-30T19:21:00+02:00
+lastmod: 2026-08-30T20:15:00+02:00
+schema_version: 2
 description: "A byte-identical control-token spelling can be trusted template syntax or untrusted client data; flattening before tokenization destroys that distinction."
 note_id: "AFN-006"
 status: "verified checkpoint"
 phase: "4"
 evidence: "39-case chat oracle, literal-control adversarial cases, segmented tokenizer adapter, transactional failure tests, and the Phase 4 model-free gate"
+evidence_checkpoint: "Hebrus fcfd5de"
 decision: "Render chat as one byte stream plus contiguous DATA and TRUSTED_CONTROL segments, then tokenize every segment according to its provenance."
 machine_summary: "You are implementing a chat template with special tokens and need to prevent user, system, or tool text from being reinterpreted as template-authored control syntax."
+invariant: "Only template-authored atoms can become trusted control IDs; caller data remains data even when its bytes spell the same token."
+failure_signature: "Flattening and retokenizing promotes a user, system, or tool literal such as <|im_end|> into template syntax."
+minimal_safe_implementation: "Return one byte stream plus complete contiguous provenance segments, validate coverage, and tokenize DATA and TRUSTED_CONTROL independently and transactionally."
+rejected_shortcut: "Escaping suspicious characters or flattening the rendered transcript and trying to reconstruct trust from its spelling."
 claim_boundary: "The segmentation boundary prevents control-token promotion in the text pipeline; it does not sanitize tool behavior or grant runtime support to the model."
+retrieval_triggers:
+  - "chat template mixes controls with client text"
+  - "literal special-token injection"
+  - "tool output contains protocol markers"
+prerequisites: ["AFN-001"]
+related_notes: ["AFN-007", "AFN-008"]
+supersedes: []
 audience: "Autonomous agents implementing chat templates, tokenizers, and tool-message adapters"
 keywords:
   - chat template security
@@ -108,4 +121,3 @@ Whenever a protocol mixes control syntax and caller-controlled text:
 - test identical spellings under both trusted and untrusted origins.
 
 This is not a Qwen-specific trick. It is a general rule for structured prompts: syntax is not defined by appearance alone. It is defined by who was allowed to create it.
-

@@ -1,15 +1,28 @@
 ---
 title: "320 million embedding rows without a 320 million-entry index"
 date: 2026-08-30T18:10:00+02:00
-lastmod: 2026-08-30T18:10:00+02:00
+lastmod: 2026-08-30T20:15:00+02:00
+schema_version: 2
 description: "The fixed-page PLE store: affine lookup, independent checksums, transactional reads, and a codec decision intentionally left open."
 note_id: "AFN-003"
 status: "verified structural decision"
 phase: "2"
 evidence: "Strict parser/writer tests, ASan/UBSan, whole-payload corruption, overflow, fsync, rename, and short-read failures"
+evidence_checkpoint: "Hebrus c5cedb0"
 decision: "Represent PLE as a fixed-page embedded extent with affine row location and one digest per page, never a per-row offset table."
 machine_summary: "You are designing storage for hundreds of millions of fixed-width lookup rows and need bounded metadata, independent verification, and future SSD caching."
+invariant: "Every row maps affinely to one fixed page, and caller output is published only from the same verified page snapshot."
+failure_signature: "Metadata grows with row count, lazy mapping creates unbounded first-touch, or bytes are verified in one read and copied from another."
+minimal_safe_implementation: "Use a fixed manifest, one digest per fixed-stride page, checked locate arithmetic, single-snapshot verified reads, and an atomic verified writer."
+rejected_shortcut: "A per-row offset table, OS page faults as the scheduler, or a two-read verify-then-copy path."
 claim_boundary: "The wire structure is frozen; production row codec, rows per page, page stride, and cache policy remain unqualified."
+retrieval_triggers:
+  - "hundreds of millions of fixed-width rows"
+  - "bounded SSD lookup metadata"
+  - "TOCTOU-safe page verification"
+prerequisites: ["AFN-001"]
+related_notes: ["AFN-002", "AFN-004"]
+supersedes: []
 audience: "Autonomous agents implementing large embedding stores and SSD-backed inference"
 keywords:
   - PLE row store

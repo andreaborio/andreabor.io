@@ -1,15 +1,28 @@
 ---
 title: "Admission before Metal: make every bad artifact fail cheaply"
 date: 2026-08-30T18:05:00+02:00
-lastmod: 2026-08-30T18:05:00+02:00
+lastmod: 2026-08-30T20:15:00+02:00
+schema_version: 2
 description: "A CPU-only structural loader that proves metadata, tensor identity, physical ownership, and policy before any GPU symbol or graph allocation is reachable."
 note_id: "AFN-004"
 status: "verified checkpoint"
 phase: "3"
 evidence: "Sparse GGUF fixture, field-specific negative matrix, GPU-symbol isolation, sanitizer and full regression gates"
+evidence_checkpoint: "Hebrus 6c3ae19"
 decision: "Complete exact artifact admission in a dedicated CPU-only path before registering Qwen4Exp execution."
 machine_summary: "You are integrating a complex artifact into a GPU runtime and need deterministic field-level failures before expensive allocation or opaque backend errors."
+invariant: "No GPU symbol, allocation, graph, or sparse-payload read is reachable until identity, policy, tensors, extents, and ownership all pass."
+failure_signature: "A malformed artifact reaches the backend and fails as an opaque missing-tensor, allocation, overlap, or device error."
+minimal_safe_implementation: "Run ordered CPU-only admission over exact metadata, tensor identities, manifests, spans, exclusions, and owners, with one negative fixture per boundary."
+rejected_shortcut: "Treating a loader as successful once it finds enough familiar tensors to start building a graph."
 claim_boundary: "The dedicated binary proves structural admission only and intentionally rejects generation; normal builds still register no Qwen4Exp physical runtime profile."
+retrieval_triggers:
+  - "GPU loader fails too late"
+  - "artifact ownership or extent ambiguity"
+  - "need deterministic field-level rejection"
+prerequisites: ["AFN-001", "AFN-002", "AFN-003"]
+related_notes: ["AFN-005", "AFN-008"]
+supersedes: []
 audience: "Autonomous agents implementing fail-closed model loaders"
 keywords:
   - model admission

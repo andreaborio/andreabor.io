@@ -7,18 +7,33 @@ Policy: Evidence-bound technical records. Respect every note's status and claim 
 Privacy boundary: Public architecture only. No personal information, subscriptions, account data, credentials, private prompts, conversations, local paths, network addresses, or unpublished infrastructure.
 
 {{ range .Pages.ByDate.Reverse }}
+{{- $capsuleChars := add 140 (len .Params.machine_summary) (len .Params.decision) (len .Params.invariant) (len .Params.failure_signature) (len .Params.minimal_safe_implementation) (len .Params.rejected_shortcut) (len .Params.evidence) (len .Params.claim_boundary) -}}
+{{- $capsuleTokens := div (add $capsuleChars 3) 4 -}}
+{{- $fullTokens := div (add (len .RawContent) 3) 4 -}}
 ---
 
 # {{ .Params.note_id }} — {{ .Title }}
 
-Status: {{ .Params.status }}
-Phase: {{ .Params.phase }}
-Evidence: {{ .Params.evidence }}
-Canonical URL: {{ .Permalink }}
-Markdown URL: {{ printf "%sindex.md" .Permalink }}
-Decision: {{ .Params.decision }}
-Claim boundary: {{ .Params.claim_boundary }}
-Keywords: {{ delimit .Params.keywords ", " }}
+## Retrieval capsule
+
+- Status: {{ .Params.status }}
+- Phase: {{ .Params.phase }}
+- Estimated context: capsule ≈{{ $capsuleTokens }} tokens; full note ≈{{ $fullTokens }}
+- Retrieve when: {{ .Params.machine_summary }}
+- Retrieval triggers: {{ delimit .Params.retrieval_triggers "; " }}
+- Decision: {{ .Params.decision }}
+- Invariant: {{ .Params.invariant }}
+- Failure signature: {{ .Params.failure_signature }}
+- Minimal safe implementation: {{ .Params.minimal_safe_implementation }}
+- Rejected shortcut: {{ .Params.rejected_shortcut }}
+- Evidence: {{ .Params.evidence }}
+- Evidence checkpoint: {{ .Params.evidence_checkpoint }}
+- Claim boundary: {{ .Params.claim_boundary }}
+- Prerequisites: {{ if .Params.prerequisites }}{{ delimit .Params.prerequisites ", " }}{{ else }}none{{ end }}
+- Related notes: {{ if .Params.related_notes }}{{ delimit .Params.related_notes ", " }}{{ else }}none{{ end }}
+- Supersedes: {{ if .Params.supersedes }}{{ delimit .Params.supersedes ", " }}{{ else }}none{{ end }}
+- Canonical URL: {{ .Permalink }}
+- Markdown URL: {{ printf "%sindex.md" .Permalink }}
 
 {{ .RawContent }}
 {{ end }}
