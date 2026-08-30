@@ -42,8 +42,8 @@ The site publishes `robots.txt`, `sitemap.xml`, RSS, semantic article metadata, 
 
 `/agents/` is a separate agent-native knowledge base. It publishes a concise
 `/agents/llms.txt`, a complete `/agents/llms-full.txt`, Markdown variants, RSS,
-TechArticle JSON-LD, and `/agents/index.json`. It is intentionally absent from
-the visual home page.
+TechArticle JSON-LD, and `/agents/index.json`. The global navigation exposes it
+as **Agents**, while the home content remains focused on the normal post feed.
 
 ## Agent Field Notes policy
 

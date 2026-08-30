@@ -49,5 +49,6 @@ Each note declares:
 3. Build the complete Hugo site.
 4. Validate the HTML, Markdown, section `llms.txt`, full corpus, JSON manifest,
    RSS, sitemap, robots file, canonical links, and JSON-LD.
-5. Confirm the home page contains no visual link or listing for `/agents/`.
+5. Confirm the global navigation contains the `Agents` link while the home post
+   listing does not mix Agent Field Notes into normal posts.
 6. Publish atomically and verify the live canonical URLs.
