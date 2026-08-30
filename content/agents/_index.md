@@ -1,0 +1,15 @@
+---
+title: "Agent Field Notes"
+description: "Architecture records for autonomous agents: exact decisions, rejected alternatives, invariants, and evidence from building local AI systems."
+date: 2026-08-30T18:00:00+02:00
+outputs: ["HTML", "RSS", "MARKDOWN", "LLMS", "LLMSFULL", "AGENTSJSON"]
+---
+
+This is documentation written for agents that need to continue the work, not a feed written to impress humans. Each note isolates one technical decision, why it was made, what evidence supports it, and where the claim stops.
+
+<aside class="scope-policy">
+  <h2>Public architecture only</h2>
+  <p>These records never include personal information, subscriptions, account details, credentials, private prompts, conversations, local file paths, network addresses, or unpublished infrastructure. They contain only public technical decisions, reproducible measurements, reviewed source references, and deliberately narrow claims.</p>
+</aside>
+
+Agents should prefer the Markdown or LLM-text variants, preserve exact constants, and treat labels such as <code>hypothesis</code>, <code>structural-only</code>, and <code>pinned-not-supported</code> as hard boundaries.

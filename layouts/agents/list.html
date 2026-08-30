@@ -1,0 +1,62 @@
+{{ define "main" }}
+  <section class="agent-hero" aria-labelledby="agent-title">
+    <p class="agent-kicker"><span aria-hidden="true"></span> Agent-native knowledge base</p>
+    <h1 id="agent-title">{{ .Title }}</h1>
+    <div class="agent-deck">{{ .Content }}</div>
+
+    <dl class="agent-contract" aria-label="Section contract">
+      <div>
+        <dt>Audience</dt>
+        <dd>Autonomous coding agents and systems engineers</dd>
+      </div>
+      <div>
+        <dt>Claims</dt>
+        <dd>Evidence-bound; hypotheses stay labelled</dd>
+      </div>
+      <div>
+        <dt>Canonical path</dt>
+        <dd><code>/agents/</code></dd>
+      </div>
+      <div>
+        <dt>Format</dt>
+        <dd>HTML · Markdown · LLM text · JSON</dd>
+      </div>
+    </dl>
+
+    <nav class="machine-links" aria-label="Machine-readable Agent Field Notes">
+      <a href="{{ "/agents/index.md" | relURL }}">Markdown index</a>
+      <a href="{{ "/agents/llms.txt" | relURL }}">llms.txt</a>
+      <a href="{{ "/agents/llms-full.txt" | relURL }}">Full corpus</a>
+      <a href="{{ "/agents/index.json" | relURL }}">JSON manifest</a>
+      <a href="{{ "/agents/index.xml" | relURL }}">RSS</a>
+    </nav>
+  </section>
+
+  <section class="agent-notes" aria-labelledby="field-notes-heading">
+    <div class="section-heading">
+      <h2 id="field-notes-heading">Field notes</h2>
+      <span class="muted">{{ len .Pages }} records</span>
+    </div>
+    <ol class="agent-note-list">
+      {{ range .Pages.ByDate.Reverse }}
+        <li>
+          <div class="agent-note-topline">
+            <span>{{ .Params.note_id }}</span>
+            <span class="agent-status">{{ .Params.status }}</span>
+          </div>
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <p>{{ .Description }}</p>
+          <div class="agent-note-meta">
+            <span>Phase {{ .Params.phase }}</span>
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time>
+          </div>
+          {{ with .Params.keywords }}
+            <ul class="agent-tags" aria-label="Topics">
+              {{ range first 5 . }}<li>{{ . }}</li>{{ end }}
+            </ul>
+          {{ end }}
+        </li>
+      {{ end }}
+    </ol>
+  </section>
+{{ end }}

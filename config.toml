@@ -1,0 +1,49 @@
+baseURL = "https://andreabor.io/"
+locale = "en-US"
+title = "Andrea Borio"
+enableEmoji = false
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+summaryLength = 28
+
+[params]
+  description = "Andrea Borio writes about local LLM inference, quantization, Apple Silicon, and running models that do not fit comfortably in memory."
+
+[permalinks]
+  posts = "/posts/:slug/"
+
+[mediaTypes]
+  [mediaTypes."text/markdown"]
+    suffixes = ["md"]
+
+[outputFormats]
+  [outputFormats.Markdown]
+    mediaType = "text/markdown"
+    baseName = "index"
+    isPlainText = true
+    rel = "alternate"
+  [outputFormats.LLMS]
+    mediaType = "text/plain"
+    baseName = "llms"
+    isPlainText = true
+    notAlternative = true
+  [outputFormats.LLMSFULL]
+    mediaType = "text/plain"
+    baseName = "llms-full"
+    isPlainText = true
+    notAlternative = true
+  [outputFormats.AGENTSJSON]
+    mediaType = "application/json"
+    baseName = "index"
+    isPlainText = true
+    notAlternative = true
+
+[outputs]
+  home = ["HTML", "RSS", "MARKDOWN", "LLMS", "LLMSFULL"]
+  page = ["HTML", "MARKDOWN"]
+  section = ["HTML", "RSS", "MARKDOWN"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

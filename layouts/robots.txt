@@ -1,0 +1,24 @@
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: *
+Allow: /
+
+# Agent-native retrieval index: {{ "agents/llms.txt" | absURL }}
+# Structured agent manifest: {{ "agents/index.json" | absURL }}
+Sitemap: {{ "sitemap.xml" | absURL }}

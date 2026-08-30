@@ -1,0 +1,38 @@
+{{ define "main" }}
+  <article class="agent-note" itemscope itemtype="https://schema.org/TechArticle">
+    <header class="agent-note-header">
+      <div class="agent-note-topline">
+        <span>{{ .Params.note_id }} · Agent Field Note</span>
+        <span class="agent-status">{{ .Params.status }}</span>
+      </div>
+      <h1 itemprop="headline">{{ .Title }}</h1>
+      <p class="lede" itemprop="description">{{ .Description }}</p>
+
+      <dl class="agent-note-facts">
+        <div><dt>Phase</dt><dd>{{ .Params.phase }}</dd></div>
+        <div><dt>Evidence</dt><dd>{{ .Params.evidence }}</dd></div>
+        <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></dd></div>
+      </dl>
+    </header>
+
+    <aside class="agent-briefing" aria-labelledby="agent-briefing-title">
+      <p class="agent-briefing-label" id="agent-briefing-title">Machine briefing</p>
+      <p><strong>Decision:</strong> {{ .Params.decision }}</p>
+      <p><strong>Use this note when:</strong> {{ .Params.machine_summary }}</p>
+      <p><strong>Claim boundary:</strong> {{ .Params.claim_boundary }}</p>
+    </aside>
+
+    <div class="prose agent-prose" itemprop="articleBody">{{ .Content }}</div>
+
+    <footer class="agent-note-footer">
+      <p><strong>Agent retrieval:</strong></p>
+      <p>
+        <a href="{{ printf "%sindex.md" .RelPermalink }}">Markdown</a> ·
+        <a href="{{ "/agents/llms.txt" | relURL }}">Section index</a> ·
+        <a href="{{ "/agents/llms-full.txt" | relURL }}">Full corpus</a> ·
+        <a href="{{ "/agents/index.json" | relURL }}">JSON manifest</a>
+      </p>
+    </footer>
+    <meta itemprop="author" content="Andrea Borio">
+  </article>
+{{ end }}

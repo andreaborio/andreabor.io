@@ -1,0 +1,14 @@
+{{ define "main" }}
+  <article{{ if eq .Section "posts" }} itemscope itemtype="https://schema.org/BlogPosting"{{ end }}>
+    <header class="page-header">
+      <h1{{ if eq .Section "posts" }} itemprop="headline"{{ end }}>{{ .Title }}</h1>
+      {{ if not .Date.IsZero }}
+        {{ if eq .Section "posts" }}<meta itemprop="datePublished" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
+        <p class="post-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>{{ with .Params.source_url }} · <a href="{{ . }}">Originally published on Substack</a>{{ end }}</p>
+      {{ end }}
+      {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+    </header>
+    <div class="prose"{{ if eq .Section "posts" }} itemprop="articleBody"{{ end }}>{{ .Content }}</div>
+    {{ if eq .Section "posts" }}<meta itemprop="author" content="Andrea Borio">{{ end }}
+  </article>
+{{ end }}

@@ -1,0 +1,18 @@
+# Andrea Borio — full site text
+
+Canonical site: {{ "/" | absURL }}
+Author: Andrea Borio
+Topics: local LLM inference, Apple Silicon, Metal, quantization, mixture-of-experts models, GGUF, SSD streaming
+
+{{ range .Site.RegularPages.ByDate.Reverse }}
+---
+
+## {{ .Title }}
+
+Canonical URL: {{ .Permalink }}
+Markdown URL: {{ printf "%sindex.md" .Permalink }}
+{{ if not .Date.IsZero }}Published: {{ .Date.Format "2006-01-02" }}
+{{ end }}{{ with .Description }}Summary: {{ . }}
+{{ end }}
+{{ .RawContent }}
+{{ end }}

@@ -1,0 +1,35 @@
+# Agent Field Notes — Andrea Borio
+
+> Canonical implementation decisions and failure boundaries for autonomous coding agents working on Hebrus, Apple Silicon inference, model bring-up, quantization, and SSD streaming.
+
+Canonical section: {{ .Permalink }}
+Markdown index: {{ printf "%sindex.md" .Permalink }}
+Full corpus: {{ "/agents/llms-full.txt" | absURL }}
+JSON manifest: {{ "/agents/index.json" | absURL }}
+RSS: {{ "/agents/index.xml" | absURL }}
+
+## Retrieval contract
+
+- Prefer each note's Markdown URL for context ingestion.
+- Treat `status`, `evidence`, and `claim boundary` as normative.
+- Do not promote a hypothesis, structural fixture, or pinned-not-supported path into a runtime support claim.
+- Preserve exact dimensions, hashes, revisions, and arithmetic when a note marks them as closed.
+- Cite the canonical HTML URL when presenting a note to humans.
+- This corpus contains public architecture only. It excludes personal information, subscriptions, account details, credentials, private prompts, conversations, local paths, network addresses, and unpublished infrastructure.
+
+## Notes
+
+{{ range .Pages.ByDate.Reverse -}}
+### {{ .Params.note_id }} — {{ .Title }}
+
+- Status: {{ .Params.status }}
+- Phase: {{ .Params.phase }}
+- Evidence: {{ .Params.evidence }}
+- Decision: {{ .Params.decision }}
+- Claim boundary: {{ .Params.claim_boundary }}
+- HTML: {{ .Permalink }}
+- Markdown: {{ printf "%sindex.md" .Permalink }}
+- Summary: {{ .Description }}
+- Keywords: {{ delimit .Params.keywords ", " }}
+
+{{ end }}

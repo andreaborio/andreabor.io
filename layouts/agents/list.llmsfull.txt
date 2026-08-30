@@ -1,0 +1,24 @@
+# Agent Field Notes — full corpus
+
+Canonical section: {{ .Permalink }}
+Author: Andrea Borio
+Audience: Autonomous coding agents and systems engineers
+Policy: Evidence-bound technical records. Respect every note's status and claim boundary.
+Privacy boundary: Public architecture only. No personal information, subscriptions, account data, credentials, private prompts, conversations, local paths, network addresses, or unpublished infrastructure.
+
+{{ range .Pages.ByDate.Reverse }}
+---
+
+# {{ .Params.note_id }} — {{ .Title }}
+
+Status: {{ .Params.status }}
+Phase: {{ .Params.phase }}
+Evidence: {{ .Params.evidence }}
+Canonical URL: {{ .Permalink }}
+Markdown URL: {{ printf "%sindex.md" .Permalink }}
+Decision: {{ .Params.decision }}
+Claim boundary: {{ .Params.claim_boundary }}
+Keywords: {{ delimit .Params.keywords ", " }}
+
+{{ .RawContent }}
+{{ end }}

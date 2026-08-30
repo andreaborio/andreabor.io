@@ -1,0 +1,27 @@
+{{- $notes := slice -}}
+{{- range .Pages.ByDate.Reverse -}}
+  {{- $notes = $notes | append (dict
+    "id" .Params.note_id
+    "title" .Title
+    "status" .Params.status
+    "phase" .Params.phase
+    "published" (.Date.Format "2006-01-02")
+    "summary" .Description
+    "decision" .Params.decision
+    "claim_boundary" .Params.claim_boundary
+    "keywords" .Params.keywords
+    "canonical_url" .Permalink
+    "markdown_url" (printf "%sindex.md" .Permalink)
+  ) -}}
+{{- end -}}
+{{- dict
+  "schema_version" 1
+  "kind" "agent-field-notes-index"
+  "title" "Agent Field Notes"
+  "author" "Andrea Borio"
+  "audience" "Autonomous coding agents and systems engineers"
+  "canonical_url" .Permalink
+  "retrieval_policy" "Treat status, evidence, and claim_boundary as normative. Do not convert hypotheses or structural-only results into support claims."
+  "privacy_policy" "Public architecture only. Excludes personal information, subscriptions, accounts, credentials, private prompts, conversations, local paths, network addresses, and unpublished infrastructure."
+  "notes" $notes
+  | jsonify -}}
