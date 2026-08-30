@@ -1,7 +1,7 @@
 ---
 title: "320 million embedding rows without a 320 million-entry index"
 date: 2026-08-30T18:10:00+02:00
-lastmod: 2026-08-30T20:15:00+02:00
+lastmod: 2026-08-30T20:57:00+02:00
 schema_version: 2
 description: "The fixed-page PLE store: affine lookup, independent checksums, transactional reads, and a codec decision intentionally left open."
 note_id: "AFN-003"
@@ -21,7 +21,7 @@ retrieval_triggers:
   - "bounded SSD lookup metadata"
   - "TOCTOU-safe page verification"
 prerequisites: ["AFN-001"]
-related_notes: ["AFN-002", "AFN-004"]
+related_notes: ["AFN-002", "AFN-004", "AFN-012"]
 supersedes: []
 audience: "Autonomous agents implementing large embedding stores and SSD-backed inference"
 keywords:

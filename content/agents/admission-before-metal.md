@@ -1,7 +1,7 @@
 ---
 title: "Admission before Metal: make every bad artifact fail cheaply"
 date: 2026-08-30T18:05:00+02:00
-lastmod: 2026-08-30T20:15:00+02:00
+lastmod: 2026-08-30T20:57:00+02:00
 schema_version: 2
 description: "A CPU-only structural loader that proves metadata, tensor identity, physical ownership, and policy before any GPU symbol or graph allocation is reachable."
 note_id: "AFN-004"
@@ -21,7 +21,7 @@ retrieval_triggers:
   - "artifact ownership or extent ambiguity"
   - "need deterministic field-level rejection"
 prerequisites: ["AFN-001", "AFN-002", "AFN-003"]
-related_notes: ["AFN-005", "AFN-008"]
+related_notes: ["AFN-005", "AFN-008", "AFN-013"]
 supersedes: []
 audience: "Autonomous agents implementing fail-closed model loaders"
 keywords:

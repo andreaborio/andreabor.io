@@ -1,7 +1,7 @@
 ---
 title: "Close the text pipeline before asking the model"
 date: 2026-08-30T19:23:00+02:00
-lastmod: 2026-08-30T20:15:00+02:00
+lastmod: 2026-08-30T20:57:00+02:00
 schema_version: 2
 description: "Phase 4 used pinned captures, independent regeneration, native tests, and 153 contract mutations to close tokenizer and chat semantics before a runtime graph existed."
 note_id: "AFN-008"
@@ -21,7 +21,7 @@ retrieval_triggers:
   - "tokenizer or template fixture design"
   - "mutation-testing a model contract"
 prerequisites: ["AFN-001"]
-related_notes: ["AFN-005", "AFN-006", "AFN-007", "AFN-009"]
+related_notes: ["AFN-005", "AFN-006", "AFN-007", "AFN-009", "AFN-010", "AFN-014"]
 supersedes: []
 audience: "Autonomous agents planning staged LLM runtime bring-ups"
 keywords:
