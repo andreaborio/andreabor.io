@@ -96,8 +96,8 @@ h3 { margin-top: 2rem; font-size: 1.1rem; }
 
 .agent-hero {
   position: relative;
-  margin: -1rem 0 4.5rem;
-  padding: 2rem;
+  margin: -1rem 0 2.25rem;
+  padding: 1.45rem 1.6rem 1.25rem;
   overflow: hidden;
   border: 1px solid var(--agent);
   background:
@@ -141,8 +141,8 @@ h3 { margin-top: 2rem; font-size: 1.1rem; }
 
 .agent-hero h1 {
   max-width: 13ch;
-  margin-bottom: 1rem;
-  font-size: clamp(2.7rem, 9vw, 5rem);
+  margin-bottom: .65rem;
+  font-size: clamp(2.25rem, 7vw, 3.65rem);
 }
 
 .agent-deck {
@@ -152,7 +152,27 @@ h3 { margin-top: 2rem; font-size: 1.1rem; }
 
 .agent-deck > p:first-child {
   max-width: 54ch;
-  font-size: 1.15rem;
+  margin: 0;
+  font-size: .96rem;
+}
+
+.agent-primary-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem 1rem;
+  margin-top: 1rem;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.agent-primary-link::after { content: " ↗"; }
+
+.agent-compact-meta {
+  margin: .75rem 0 0;
+  color: var(--muted);
+  font-size: .68rem;
+  letter-spacing: .035em;
+  text-transform: uppercase;
 }
 
 .scope-policy {
@@ -218,6 +238,29 @@ h3 { margin-top: 2rem; font-size: 1.1rem; }
 }
 
 .machine-links a:hover { background: var(--bg); }
+
+.agent-archive-guide {
+  margin-top: 2rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--code) 30%, transparent);
+}
+
+.agent-archive-guide summary {
+  padding: .9rem 1rem;
+  color: var(--agent);
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.agent-archive-guide-body {
+  padding: 0 1rem 1rem;
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+.agent-archive-guide-body p { max-width: 72ch; }
+.agent-archive-guide .agent-contract { margin-top: 1rem; }
 
 .agent-note-list {
   display: grid;
