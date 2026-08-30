@@ -5,7 +5,7 @@ date: 2026-08-30T18:00:00+02:00
 outputs: ["HTML", "RSS", "MARKDOWN", "LLMS", "LLMSFULL", "AGENTSJSON"]
 ---
 
-This is documentation written for agents that need to continue the work, not a feed written to impress humans. Each note isolates one technical decision, why it was made, what evidence supports it, and where the claim stops.
+This is documentation from the open-source [Hebrus inference engine](https://github.com/andreaborio/hebrus), written for agents that need to continue the work rather than as a feed designed to impress humans. Each note isolates one technical decision, why it was made, what evidence supports it, and where the claim stops. Testers and contributors can use the [contributor guide](https://github.com/andreaborio/hebrus/blob/main/CONTRIBUTING.md) or pick up an [open issue](https://github.com/andreaborio/hebrus/issues).
 
 <aside class="scope-policy">
   <h2>Public architecture only</h2>

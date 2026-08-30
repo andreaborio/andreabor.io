@@ -19,6 +19,18 @@
       </dl>
     </header>
 
+    <aside class="hebrus-project" aria-labelledby="hebrus-project-title" itemprop="about" itemscope itemtype="https://schema.org/SoftwareSourceCode">
+      <p class="hebrus-project-label" id="hebrus-project-title">Built in the open with</p>
+      <h2 itemprop="name">{{ .Site.Params.hebrus.name }}</h2>
+      <p>These field notes come from implementing local, Metal-first LLM inference in Hebrus. Reproduce the evidence, report a boundary case, or contribute the next verified step.</p>
+      <nav aria-label="Hebrus project links">
+        <a itemprop="codeRepository" href="{{ .Site.Params.hebrus.repository }}">Hebrus source repository</a>
+        <a href="{{ .Site.Params.hebrus.contributing }}">Contribute to Hebrus</a>
+        <a href="{{ .Site.Params.hebrus.issues }}">Report or pick up an issue</a>
+      </nav>
+      <meta itemprop="url" content="{{ .Site.Params.hebrus.repository }}">
+    </aside>
+
     <aside class="agent-briefing" aria-labelledby="agent-briefing-title">
       <div class="agent-briefing-heading">
         <p class="agent-briefing-label" id="agent-briefing-title">Retrieval capsule</p>
@@ -52,6 +64,7 @@
       </p>
       <p><strong>Prerequisites:</strong> {{ if .Params.prerequisites }}{{ delimit .Params.prerequisites ", " }}{{ else }}none{{ end }}</p>
       <p><strong>Related notes:</strong> {{ if .Params.related_notes }}{{ delimit .Params.related_notes ", " }}{{ else }}none{{ end }}</p>
+      <p><strong>Project:</strong> <a href="{{ .Site.Params.hebrus.repository }}">Hebrus</a> · <a href="{{ .Site.Params.hebrus.contributing }}">Contributor guide</a> · <a href="{{ .Site.Params.hebrus.issues }}">Open issues</a></p>
     </footer>
     <meta itemprop="author" content="Andrea Borio">
   </article>

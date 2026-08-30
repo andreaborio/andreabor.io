@@ -312,6 +312,29 @@ h3 { margin-top: 2rem; font-size: 1.1rem; }
 .agent-briefing p { margin: .55rem 0; font-size: .86rem; }
 .agent-briefing .agent-briefing-label { margin: 0 0 .85rem; }
 
+.hebrus-project {
+  margin: 1.25rem 0;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  background: var(--agent-soft);
+}
+
+.hebrus-project-label {
+  margin: 0 0 .2rem;
+  color: var(--muted);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.hebrus-project h2 { margin: 0 0 .35rem; font-size: 1.2rem; }
+.hebrus-project p { margin: .3rem 0 .75rem; }
+.hebrus-project nav { display: flex; flex-wrap: wrap; gap: .45rem .9rem; }
+.hebrus-project nav a { font-size: .86rem; font-weight: 650; }
+.hebrus-project-section { margin: 1.1rem 0 1.35rem; }
+
 .agent-briefing-heading {
   display: flex;
   align-items: baseline;

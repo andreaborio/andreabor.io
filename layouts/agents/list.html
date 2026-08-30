@@ -4,6 +4,17 @@
     <h1 id="agent-title">{{ .Title }}</h1>
     <div class="agent-deck">{{ .Content }}</div>
 
+    <aside class="hebrus-project hebrus-project-section" aria-label="Hebrus open-source project">
+      <p class="hebrus-project-label">The implementation behind the notes</p>
+      <h2>{{ .Site.Params.hebrus.name }}</h2>
+      <p>Follow the implementation, reproduce a gate, and help turn verified research into fast local inference.</p>
+      <nav aria-label="Hebrus project links">
+        <a href="{{ .Site.Params.hebrus.repository }}">View the Hebrus repository</a>
+        <a href="{{ .Site.Params.hebrus.contributing }}">Contributor guide</a>
+        <a href="{{ .Site.Params.hebrus.issues }}">Issues for testers and contributors</a>
+      </nav>
+    </aside>
+
     <dl class="agent-contract" aria-label="Section contract">
       <div>
         <dt>Audience</dt>

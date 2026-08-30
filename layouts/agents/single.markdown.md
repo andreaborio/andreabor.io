@@ -10,6 +10,10 @@
 - Phase: {{ .Params.phase }}
 - Published: {{ .Date.Format "2006-01-02" }}
 - Canonical URL: {{ .Permalink }}
+- Project: {{ .Site.Params.hebrus.name }}
+- Hebrus source repository: {{ .Site.Params.hebrus.repository }}
+- Contribute to Hebrus: {{ .Site.Params.hebrus.contributing }}
+- Hebrus issue tracker: {{ .Site.Params.hebrus.issues }}
 - Keywords: {{ delimit .Params.keywords ", " }}
 
 ## Retrieval capsule

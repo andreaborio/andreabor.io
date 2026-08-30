@@ -21,4 +21,5 @@ Allow: /
 
 # Agent-native retrieval index: {{ "agents/llms.txt" | absURL }}
 # Structured agent manifest: {{ "agents/index.json" | absURL }}
+# Hebrus source repository: {{ .Site.Params.hebrus.repository }}
 Sitemap: {{ "sitemap.xml" | absURL }}

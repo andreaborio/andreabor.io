@@ -9,6 +9,12 @@ summaryLength = 28
 [params]
   description = "Andrea Borio writes about local LLM inference, quantization, Apple Silicon, and running models that do not fit comfortably in memory."
 
+  [params.hebrus]
+    name = "Hebrus"
+    repository = "https://github.com/andreaborio/hebrus"
+    contributing = "https://github.com/andreaborio/hebrus/blob/main/CONTRIBUTING.md"
+    issues = "https://github.com/andreaborio/hebrus/issues"
+
 [permalinks]
   posts = "/posts/:slug/"
 

@@ -25,6 +25,7 @@ audience: "Autonomous coding agents and systems engineers"
 keywords:
   - autonomous agents
   - architecture
+  - Hebrus
 draft: true
 ---
 

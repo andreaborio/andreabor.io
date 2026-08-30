@@ -7,10 +7,14 @@
   {{- $description := .Site.Params.description -}}
   {{- with .Description }}{{ $description = . }}{{ else }}{{ with .Summary }}{{ if not $.IsHome }}{{ $description = . | plainify | htmlUnescape }}{{ end }}{{ end }}{{ end }}
   {{- $isArticle := and .IsPage (or (eq .Section "posts") (eq .Section "agents")) -}}
+  {{- $keywords := .Params.keywords | default (slice) -}}
+  {{- if eq .Section "agents" -}}
+    {{- $keywords = $keywords | append "Hebrus" "Hebrus inference engine" "open-source local LLM inference" -}}
+  {{- end -}}
   <meta name="description" content="{{ $description }}">
   <meta name="author" content="Andrea Borio">
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
-  {{ with .Params.keywords }}<meta name="keywords" content="{{ delimit . ", " }}">{{ end }}
+  {{ with $keywords }}<meta name="keywords" content="{{ delimit . ", " }}">{{ end }}
   <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
   <meta property="og:description" content="{{ $description }}">
   <meta property="og:type" content="{{ if $isArticle }}article{{ else }}website{{ end }}">
@@ -18,10 +22,13 @@
   {{ if and $isArticle (not .Date.IsZero) }}<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
   {{ if and $isArticle (not .Lastmod.IsZero) }}<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
   {{ if and (eq .Section "agents") .IsPage }}
+    <meta property="article:tag" content="Hebrus">
+    <meta property="article:tag" content="open-source local LLM inference">
     <meta name="citation_title" content="{{ .Title }}">
     <meta name="citation_author" content="Andrea Borio">
     <meta name="citation_publication_date" content="{{ .Date.Format "2006-01-02" }}">
     <meta name="citation_fulltext_html_url" content="{{ .Permalink }}">
+    <meta name="citation_reference" content="Hebrus source repository: {{ .Site.Params.hebrus.repository }}">
   {{ end }}
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="author" href="{{ "/about/" | absURL }}">
@@ -29,6 +36,7 @@
   {{ if eq .Section "agents" }}
     <link rel="alternate" type="text/plain" href="{{ "/agents/llms.txt" | absURL }}" title="Agent Field Notes index">
     <link rel="alternate" type="application/json" href="{{ "/agents/index.json" | absURL }}" title="Agent Field Notes manifest">
+    <link rel="related" href="{{ .Site.Params.hebrus.repository }}" title="Hebrus source repository">
   {{ end }}
   {{ with .OutputFormats.Get "MARKDOWN" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
   <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
@@ -46,7 +54,15 @@
       "url" .Permalink
       "proficiencyLevel" "Expert"
       "audience" (dict "@type" "Audience" "audienceType" (.Params.audience | default "Autonomous AI agents and systems engineers"))
-      "keywords" (.Params.keywords | default (slice "autonomous agents" "local LLM inference" "Hebrus"))
+      "keywords" $keywords
+      "about" (dict
+        "@type" "SoftwareSourceCode"
+        "name" .Site.Params.hebrus.name
+        "url" .Site.Params.hebrus.repository
+        "codeRepository" .Site.Params.hebrus.repository
+        "license" "https://github.com/andreaborio/hebrus/blob/main/LICENSE"
+      )
+      "citation" .Site.Params.hebrus.repository
     -}}
     <script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
   {{ end }}

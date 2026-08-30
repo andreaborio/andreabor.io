@@ -27,4 +27,12 @@
 {{- if ne .Params.schema_version 2 -}}
   {{- errorf "agent note %s uses schema_version %v; expected 2" .File.Path .Params.schema_version -}}
 {{- end -}}
-
+{{- $project := .Site.Params.hebrus -}}
+{{- range slice "name" "repository" "contributing" "issues" -}}
+  {{- if not (isset $project .) -}}
+    {{- errorf "agent note %s cannot render without canonical Hebrus project field %q" $.File.Path . -}}
+  {{- end -}}
+{{- end -}}
+{{- if ne $project.name "Hebrus" -}}
+  {{- errorf "agent notes must cite the canonical Hebrus project; got %q" $project.name -}}
+{{- end -}}

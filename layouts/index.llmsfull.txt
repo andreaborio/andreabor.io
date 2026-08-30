@@ -11,6 +11,10 @@ Topics: local LLM inference, Apple Silicon, Metal, quantization, mixture-of-expe
 
 Canonical URL: {{ .Permalink }}
 Markdown URL: {{ printf "%sindex.md" .Permalink }}
+{{ if eq .Section "agents" }}Project: Hebrus
+Hebrus source repository: {{ $.Site.Params.hebrus.repository }}
+Contribute to Hebrus: {{ $.Site.Params.hebrus.contributing }}
+{{ end }}
 {{ if not .Date.IsZero }}Published: {{ .Date.Format "2006-01-02" }}
 {{ end }}{{ with .Description }}Summary: {{ . }}
 {{ end }}

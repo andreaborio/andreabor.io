@@ -7,6 +7,10 @@ Claim policy: Evidence-bound; hypotheses remain explicitly labelled
 Canonical URL: {{ .Permalink }}
 Agent retrieval index: {{ "/agents/llms.txt" | absURL }}
 Structured manifest: {{ "/agents/index.json" | absURL }}
+Project: {{ .Site.Params.hebrus.name }}
+Hebrus source repository: {{ .Site.Params.hebrus.repository }}
+Contribute to Hebrus: {{ .Site.Params.hebrus.contributing }}
+Hebrus issue tracker: {{ .Site.Params.hebrus.issues }}
 
 ## Field notes
 

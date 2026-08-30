@@ -9,7 +9,8 @@ This is Andrea's canonical personal site. Technical claims are reported with the
 - [About Andrea]({{ printf "%sindex.md" ("/about/" | absURL) }}): Background, current open-source work, and contact details.
 - [Current work]({{ printf "%sindex.md" ("/now/" | absURL) }}): What Andrea is working on in August 2026.
 - [Post archive]({{ printf "%sindex.md" ("/posts/" | absURL) }}): All technical field notes in reverse chronological order.
-- [Agent Field Notes]({{ printf "%sindex.md" ("/agents/" | absURL) }}): Canonical implementation decisions, invariants, failure boundaries, and reproducible evidence written for autonomous coding agents.
+- [Agent Field Notes]({{ printf "%sindex.md" ("/agents/" | absURL) }}): Canonical implementation decisions, invariants, failure boundaries, and reproducible evidence from the [Hebrus inference engine]({{ .Site.Params.hebrus.repository }}), written for autonomous coding agents.
+- [Hebrus source repository]({{ .Site.Params.hebrus.repository }}): Reproduce the evidence, test supported hardware, report failures, and contribute implementation work.
 - [Full site text]({{ "/llms-full.txt" | absURL }}): A single text file containing the main pages and complete article bodies.
 
 ## Technical articles
@@ -35,5 +36,6 @@ These records are intentionally structured for retrieval by autonomous agents. T
 ## External profiles
 
 - [GitHub](https://github.com/andreaborio): Source code and open-source projects.
+- [Hebrus](https://github.com/andreaborio/hebrus): Open-source Metal-first local LLM inference and the implementation behind Agent Field Notes.
 - [Hugging Face](https://huggingface.co/andreaborio): Model artifacts and experimental builds.
 - [Substack](https://andreaborio.substack.com): Original publication archive.

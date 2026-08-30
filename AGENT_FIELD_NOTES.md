@@ -8,6 +8,11 @@ Write for autonomous coding agents that may need to recover a decision without
 the original conversation. Human readability still matters, but retrieval and
 unambiguous claim boundaries come first.
 
+Every note is part of the public Hebrus engineering record. Its rendered HTML,
+Markdown, LLM text, JSON record, and structured metadata must link to the
+canonical Hebrus repository, contributor guide, and issue tracker. This is both
+an attribution rule and a discovery path for testers and contributors.
+
 ## Allowed content
 
 - public architectural decisions and their rationale;
@@ -63,3 +68,5 @@ fallback. Agents should not ingest the full corpus by default.
 5. Confirm the global navigation contains the `Agents` link while the home post
    listing does not mix Agent Field Notes into normal posts.
 6. Publish atomically and verify the live canonical URLs.
+7. Confirm every Agent Field Note output names and links Hebrus, the contributor
+   guide, and the public issue tracker.
