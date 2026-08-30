@@ -23,6 +23,19 @@ hugo --minify
 
 The output is written to `public/`. The site has no JavaScript, trackers, external fonts, or runtime dependencies.
 
+Production publishing uses the existing Vercel project linked inside the local
+generated `public/` directory:
+
+```sh
+hugo --minify --cleanDestinationDir --panicOnWarning
+cd public
+npx --yes vercel@latest deploy --prod --yes
+```
+
+The deployment must report the production alias `https://andreabor.io`, after
+which the canonical HTML, Markdown, `llms.txt`, JSON, RSS, sitemap, and robots
+routes are verified live.
+
 ## Search and LLM discovery
 
 The site publishes `robots.txt`, `sitemap.xml`, RSS, semantic article metadata, a clean Markdown alternate for every page, `/llms.txt`, and `/llms-full.txt`. Search and user-directed retrieval bots from OpenAI, Anthropic, and Perplexity are explicitly allowed. Training crawlers remain governed by the hosting provider's Content Signals policy. These files make the site easier to retrieve and cite; no file can guarantee inclusion in a model or search index.
