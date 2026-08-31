@@ -1,21 +1,21 @@
 ---
 title: "A hole in cache history is not padding"
 date: 2026-08-31T12:34:00+02:00
-lastmod: 2026-08-31T12:34:00+02:00
+lastmod: 2026-08-31T12:54:00+02:00
 schema_version: 2
 description: "Left padding may move the first real token; a missing position inside the visible run destroys sparse-group semantics and must fail closed."
 note_id: "AFN-018"
-status: "hypothesis"
+status: "verified checkpoint"
 phase: "6 architecture"
-evidence: "llama.cpp ff24f38 makes index-cache lifecycle mirror the main cache and c88c916 groups by logical position rather than cell adjacency; the stricter contiguous-run Hebrus rule awaits its public Phase 6 checkpoint"
-evidence_checkpoint: "llama.cpp ff24f38 and c88c916; Phase 6 public checkpoint pending"
+evidence: "Host strict and ASan/UBSan tests for left-padding anchors, internal-hole rejection, slot reuse, wrap eviction, reset, copy, fork, rewind, shift, remove, serialization and atomic restore; actual-device Metal rejection of groups crossing a position hole"
+evidence_checkpoint: "Hebrus c3759b5"
 decision: "Model each visible sequence as one contiguous logical-position run: permit an arbitrary first position for left padding, require every append to advance by one, and reject internal holes before sparse planning."
 machine_summary: "You are grouping cached tokens by logical position and need to distinguish legal left padding or eviction from an internal gap that would silently drop attention history."
 invariant: "Every live position in a visible sequence run has exactly one predecessor except the first; complete groups and the raw tail partition that run without gaps or overlap."
 failure_signature: "A removed or stale middle token leaves earlier live tokens that belong to neither a complete group nor the final tail, so sparse attention silently forgets valid history."
 minimal_safe_implementation: "Anchor grouping at the first live logical position, enforce successor appends, validate contiguity before planning, and rebuild pooled groups transactionally after lifecycle operations."
 rejected_shortcut: "Treating a missing middle slot as ordinary padding, grouping adjacent physical cells, or skipping the gap and continuing group numbering."
-claim_boundary: "This is the proposed Hebrus long-state contract; verified remove, wrap, rewind, shift, copy, restore, and multi-sequence evidence remains pending a public Phase 6 checkpoint."
+claim_boundary: "Hebrus c3759b5 verifies the contiguous-run and transactional lifecycle contract in the model-free QSA cache and Metal selection path; it does not expose long QSA state through a production profile, artifact codec, or runtime-support admission."
 retrieval_triggers:
   - "hole inside KV cache history"
   - "left padding versus missing token"
@@ -94,7 +94,9 @@ model with explicit segments—not permission to reinterpret a hole.
 
 ## Failure boundary
 
-This note does not claim that current public Hebrus supports long QSA state. It
-records the fail-closed cache model that Phase 6 must verify across holes, wrap,
-rewind, shift, serialization, and multiple interleaved sequences before the
-sparse path can replace the bounded dense oracle.
+[`c3759b5`](https://github.com/andreaborio/hebrus/commit/c3759b5b096afeb44c4db5768dee9a1de23a63a7)
+verifies the fail-closed cache model across left-padding anchors, internal
+holes, slot reuse, wrap eviction, rewind, shift, copy/fork, serialization,
+atomic restore, and multiple sequences. The implementation remains a linked
+model-free partition: no production profile, artifact codec, or runtime-support
+admission selects it.

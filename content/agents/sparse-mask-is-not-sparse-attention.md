@@ -1,21 +1,21 @@
 ---
 title: "A sparse mask is not sparse attention"
 date: 2026-08-31T12:36:00+02:00
-lastmod: 2026-08-31T12:36:00+02:00
+lastmod: 2026-08-31T12:54:00+02:00
 schema_version: 2
 description: "Selecting 2,051 keys does not make attention sparse if the backend still allocates or traverses the full query-by-key matrix."
 note_id: "AFN-016"
-status: "hypothesis"
+status: "verified checkpoint"
 phase: "6 architecture"
-evidence: "AFN-011 provides the bounded dense oracle; llama.cpp c88c916 exposes exact QSA selection semantics through a generic attention mask, while MLX-VLM PR #2032 likewise provides a dense-mask comparison point"
-evidence_checkpoint: "AFN-011; llama.cpp c88c916; MLX-VLM PR #2032"
+evidence: "Pinned Transformers plus independent NumPy capture; host strict and ASan/UBSan lanes; actual-device Metal selection at 65,537, 100,000, and 262,144 visible tokens; compact gather and online attention; zero dense-mask byte accounting; private allocation, non-completion, and clean-completion gates"
+evidence_checkpoint: "Hebrus c3759b5"
 decision: "Define sparse attention by physical work: keep compact logical IDs, resolve only selected cache slots, gather only selected K/V rows, and run online softmax over the compact row."
 machine_summary: "You are implementing sparse or selected attention and need to distinguish mathematically sparse visibility from bounded memory traffic and compute."
 invariant: "For each query, allocation, K/V reads, score work, and softmax work scale with selected width plus candidate-group scoring, never with the full query-by-key rectangle."
 failure_signature: "Telemetry reports a small selected set while memory, dispatches, or kernel time still grow like dense attention because the selected IDs only modify a mask around a generic backend."
 minimal_safe_implementation: "Carry selected logical IDs to one slot-resolution boundary, compact the referenced K/V rows into bounded scratch, and apply an online softmax that visits exactly those rows."
 rejected_shortcut: "Building a dense boolean or additive mask from top-k IDs and calling ordinary dense attention while describing the path as sparse."
-claim_boundary: "This is the Phase 6 Hebrus architecture under qualification; it does not claim that the current public Hebrus checkpoint contains the compact Metal path or proves long-context throughput."
+claim_boundary: "Hebrus c3759b5 proves the model-free F32 host and Metal sparse-QSA path through the frozen 262,144-token boundary; it does not register a production profile, family dispatch, artifact codec, full-checkpoint logits claim, or runtime support."
 retrieval_triggers:
   - "top-k mask still runs dense attention"
   - "selected keys but quadratic memory"
@@ -48,7 +48,9 @@ groups plus a raw tail of at most three tokens: 2,051 visible keys. That result
 is mathematically sparse. It becomes an implementation win only if the backend
 also avoids allocating, reading, scoring, or masking every other key.
 
-The intended Hebrus path is:
+The Phase 6 path verified at
+[`c3759b5`](https://github.com/andreaborio/hebrus/commit/c3759b5b096afeb44c4db5768dee9a1de23a63a7)
+is:
 
 ```text
 logical history
@@ -80,16 +82,16 @@ dense query-by-key boolean array before ordinary attention.
 Hebrus therefore treats those paths as numeric and transition references, not
 as proof of bounded accelerator work.
 
-## What must be measured
+## What the checkpoint measures
 
-Selected-count telemetry is insufficient. A physically sparse path records:
+Selected-count telemetry alone would be insufficient. The checkpoint freezes:
 
 - candidate groups scored;
 - selected groups and expanded token width;
-- K/V rows and bytes gathered;
-- scratch bytes, with no query-by-key allocation;
-- attention rows actually visited;
-- kernel time at fixed selected width while total history grows.
+- raw-key, K/V, pooled-key, workspace, and total allocation byte ownership;
+- scratch sized as groups plus budget plus selected width, never queries by keys;
+- compact gather and online-attention outputs against the host oracle;
+- actual-device selection at 65,537, 100,000, and 262,144 visible tokens.
 
 The key negative assertion is simple: the dense-mask allocation counter remains
 zero.
@@ -107,8 +109,8 @@ weakening the zero-dense-allocation gate.
 
 ## Failure boundary
 
-AFN-011 remains the verified public baseline: dense QSA is an executable oracle
-through 2,051 visible keys and rejects larger histories. This note records the
-native sparse architecture that must replace the dense execution path. The
-claim becomes verified only after the compact path, counters, long boundaries,
-and failure rollback are anchored in a public Hebrus checkpoint.
+AFN-011 remains the bounded dense oracle through 2,051 visible keys.
+[`c3759b5`](https://github.com/andreaborio/hebrus/commit/c3759b5b096afeb44c4db5768dee9a1de23a63a7)
+closes the model-free sparse replacement, its byte accounting, long boundaries,
+and publication rollback. It is linked but no production profile, family
+dispatch, artifact codec, or runtime-support selector can reach it.

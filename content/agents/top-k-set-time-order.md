@@ -1,21 +1,21 @@
 ---
 title: "Top-k chooses the set; time chooses the order"
 date: 2026-08-31T12:35:00+02:00
-lastmod: 2026-08-31T12:35:00+02:00
+lastmod: 2026-08-31T12:54:00+02:00
 schema_version: 2
 description: "Ranking decides which sparse-attention groups survive; canonical logical order decides how the selected row is represented and reduced."
 note_id: "AFN-017"
-status: "hypothesis"
+status: "verified checkpoint"
 phase: "6 architecture"
-evidence: "AFN-011 freezes the dense comparison domain and llama.cpp c88c916 shows why selected token IDs are a stronger oracle than plausible logits; the canonical Hebrus emission-order checkpoint remains pending"
-evidence_checkpoint: "AFN-011; llama.cpp c88c916; Phase 6 public checkpoint pending"
+evidence: "Pinned Transformers and independent NumPy selected-ID capture; exact host full-raw/incremental equality; dense parity at 0–5 and 2,047–2,052 tokens; ascending-position tie tests; chunk/decode equality; actual-device Metal selection through 262,144 visible tokens"
+evidence_checkpoint: "Hebrus c3759b5"
 decision: "Use deterministic score order only to choose the top-k set, then emit the chosen groups in ascending logical position before expansion and tail append."
 machine_summary: "You have a top-k selector whose mathematical result is a set, but downstream cache gathers and floating reductions require one canonical sequence."
 invariant: "Selection membership depends only on score and the frozen tie rule; the emitted token row is always chronological and is byte-identical to dense visibility whenever every complete group fits the budget."
 failure_signature: "The correct groups are selected but appear in rank order, so below-budget sparse rows differ from dense rows and finite-precision attention changes with heap or parallel-reduction details."
 minimal_safe_implementation: "Select membership with descending score and ascending group-position ties, sort the surviving group IDs by position, expand each group contiguously, then append the raw tail."
 rejected_shortcut: "Treating top-k rank order as the cache-read and reduction order merely because exact real-number attention is permutation invariant."
-claim_boundary: "The ordering rule is an architectural candidate until its dense parity, tie mutations, host/Metal identity, and long-boundary tests are attached to a public Hebrus checkpoint."
+claim_boundary: "Hebrus c3759b5 proves the ordering rule for the model-free host and Metal QSA path, including dense parity, equal-score ties, full-raw/incremental identity, and long boundaries; it does not qualify a production profile or full-checkpoint inference."
 retrieval_triggers:
   - "top-k membership versus output order"
   - "sparse row differs below budget"
@@ -100,8 +100,9 @@ Tests must therefore distinguish:
 
 ## Failure boundary
 
-The rule does not claim a verified Hebrus Phase 6 implementation yet. Its value
-is architectural: it separates semantic selection from deterministic physical
-representation and creates a much sharper parity oracle. Verification requires
-the public host/Metal selected-ID fixtures and mutations that fail when either
-membership or emission order changes.
+[`c3759b5`](https://github.com/andreaborio/hebrus/commit/c3759b5b096afeb44c4db5768dee9a1de23a63a7)
+verifies this separation in the model-free host and Metal paths. The strict
+lane covers exact selected IDs, equal-score ties, full-raw/incremental identity,
+the dense-parity cut around 2,051 visible tokens, and actual-device selection
+through 262,144. It does not make the linked partition production-selectable or
+qualify full-checkpoint inference.

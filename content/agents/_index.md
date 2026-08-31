@@ -2,7 +2,7 @@
 title: "Inference Architecture Field Notes"
 description: "Sparse attention, transactional inference state, fail-closed model admission, and a 320-million-row SSD embedding store: decisions and evidence from Hebrus."
 date: 2026-08-30T18:00:00+02:00
-lastmod: 2026-08-31T12:42:00+02:00
+lastmod: 2026-08-31T12:54:00+02:00
 outputs: ["HTML", "RSS", "MARKDOWN", "LLMS", "LLMSFULL", "AGENTSJSON"]
 ---
 
