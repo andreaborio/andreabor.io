@@ -32,6 +32,8 @@ keywords:
   - tensor ownership
   - Qwen4Exp loader
   - autonomous agents
+featured: true
+architecture_area: "Admission"
 ---
 
 A loader is not successful because it can find enough tensors to start a graph.

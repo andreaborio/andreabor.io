@@ -12,9 +12,34 @@
     <p class="agent-compact-meta">{{ len .Pages }} notes · public architecture only · evidence-bound</p>
   </section>
 
+  {{ $featured := where .Pages "Params.featured" true }}
+  <section class="agent-featured" aria-labelledby="architecture-heading">
+    <div class="section-heading">
+      <h2 id="architecture-heading">Start with the architecture</h2>
+      <span class="muted">{{ len $featured }} core decisions</span>
+    </div>
+    <p class="agent-section-deck">Four boundaries that determine whether the runtime is merely plausible or mechanically defensible.</p>
+    <ol class="agent-featured-grid">
+      {{ range $featured.ByDate.Reverse }}
+        <li>
+          <div class="agent-note-topline">
+            <span>{{ .Params.architecture_area }}</span>
+            <span>{{ .Params.note_id }}</span>
+          </div>
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <p>{{ .Description }}</p>
+          <div class="agent-featured-footer">
+            <span class="agent-status">{{ .Params.status }}</span>
+            <span>Read decision →</span>
+          </div>
+        </li>
+      {{ end }}
+    </ol>
+  </section>
+
   <section class="agent-notes" aria-labelledby="field-notes-heading">
     <div class="section-heading">
-      <h2 id="field-notes-heading">Field notes</h2>
+      <h2 id="field-notes-heading">All decision records</h2>
       <span class="muted">{{ len .Pages }} records</span>
     </div>
     <ol class="agent-note-list">

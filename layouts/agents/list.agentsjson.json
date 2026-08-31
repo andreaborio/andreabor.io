@@ -6,6 +6,8 @@
   {{- $notes = $notes | append (dict
     "id" .Params.note_id
     "title" .Title
+    "architecture_area" (.Params.architecture_area | default "Implementation boundary")
+    "featured" (.Params.featured | default false)
     "status" .Params.status
     "phase" .Params.phase
     "published" (.Date.Format "2006-01-02")
@@ -33,7 +35,7 @@
 {{- dict
   "schema_version" 2
   "kind" "agent-field-notes-index"
-  "title" "Agent Field Notes"
+  "title" "Inference Architecture Field Notes"
   "author" "Andrea Borio"
   "audience" "Autonomous coding agents and systems engineers"
   "canonical_url" .Permalink

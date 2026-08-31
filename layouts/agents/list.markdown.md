@@ -19,6 +19,8 @@ Hebrus issue tracker: {{ .Site.Params.hebrus.issues }}
 {{- $fullTokens := div (add (len .RawContent) 3) 4 -}}
 - [{{ .Params.note_id }} — {{ .Title }}]({{ printf "%sindex.md" .Permalink }})
   - Status: {{ .Params.status }}
+  - Architecture area: {{ .Params.architecture_area | default "Implementation boundary" }}
+  - Featured: {{ .Params.featured | default false }}
   - Phase: {{ .Params.phase }}
   - Retrieve when: {{ .Params.machine_summary }}
   - Estimated full-note context: ≈{{ $fullTokens }} tokens

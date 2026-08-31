@@ -9,7 +9,7 @@ This is Andrea's canonical personal site. Technical claims are reported with the
 - [About Andrea]({{ printf "%sindex.md" ("/about/" | absURL) }}): Background, current open-source work, and contact details.
 - [Current work]({{ printf "%sindex.md" ("/now/" | absURL) }}): What Andrea is working on in August 2026.
 - [Post archive]({{ printf "%sindex.md" ("/posts/" | absURL) }}): All technical field notes in reverse chronological order.
-- [Agent Field Notes]({{ printf "%sindex.md" ("/agents/" | absURL) }}): Canonical implementation decisions, invariants, failure boundaries, and reproducible evidence from the [Hebrus inference engine]({{ .Site.Params.hebrus.repository }}), written for autonomous coding agents.
+- [Inference Architecture Field Notes]({{ printf "%sindex.md" ("/agents/" | absURL) }}): Sparse attention, transactional state, fail-closed admission, checkpoint-scale storage, and other canonical decisions from the [Hebrus inference engine]({{ .Site.Params.hebrus.repository }}).
 - [Hebrus source repository]({{ .Site.Params.hebrus.repository }}): Reproduce the evidence, test supported hardware, report failures, and contribute implementation work.
 - [Full site text]({{ "/llms-full.txt" | absURL }}): A single text file containing the main pages and complete article bodies.
 

@@ -33,6 +33,8 @@ keywords:
   - recurrent state
   - KV cache
   - Qwen4Exp
+featured: true
+architecture_area: "Transactional state"
 draft: false
 ---
 

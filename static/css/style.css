@@ -262,6 +262,83 @@ h3 { margin-top: 2rem; font-size: 1.1rem; }
 .agent-archive-guide-body p { max-width: 72ch; }
 .agent-archive-guide .agent-contract { margin-top: 1rem; }
 
+.agent-featured { margin: 3rem 0 3.5rem; }
+
+.agent-section-deck,
+.home-agent-deck {
+  max-width: 64ch;
+  margin: .9rem 0 1.25rem;
+  color: var(--muted);
+  font-size: .88rem;
+}
+
+.agent-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 1px;
+  background: var(--agent);
+  list-style: none;
+}
+
+.agent-featured-grid > li {
+  display: flex;
+  min-height: 18rem;
+  flex-direction: column;
+  padding: 1.25rem;
+  background: var(--bg);
+}
+
+.agent-featured-grid h3 { margin: 1rem 0 .75rem; font-size: 1.25rem; }
+.agent-featured-grid h3 a { color: var(--text); }
+.agent-featured-grid p { margin: 0; color: var(--muted); font-size: .84rem; }
+
+.agent-featured-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: var(--agent);
+  font-size: .67rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.home-agent-notes { margin-bottom: 4.5rem; }
+
+.home-agent-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-agent-list li {
+  padding: .9rem 1rem;
+  border: 1px solid var(--line);
+}
+
+.home-agent-list span {
+  display: block;
+  margin-bottom: .35rem;
+  color: var(--agent);
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.home-agent-list a {
+  color: var(--text);
+  font-size: .86rem;
+  font-weight: 700;
+}
+
 .agent-note-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -475,7 +552,11 @@ footer p { margin: .35rem 0; }
   .agent-contract,
   .agent-note-facts,
   .agent-recovery-grid,
-  .agent-note-list { grid-template-columns: 1fr; }
+  .agent-note-list,
+  .agent-featured-grid,
+  .home-agent-list { grid-template-columns: 1fr; }
+  .agent-featured-grid > li { min-height: 0; }
+  .agent-featured-footer { margin-top: 1.5rem; }
   .agent-note-list > li { min-height: 0; }
   .agent-note-meta { margin-top: 1.5rem; }
 }

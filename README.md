@@ -36,11 +36,24 @@ The deployment must report the production alias `https://andreabor.io`, after
 which the canonical HTML, Markdown, `llms.txt`, JSON, RSS, sitemap, and robots
 routes are verified live.
 
+After a verified production deploy, notify IndexNow only about changed public
+URLs. The script contains a public site key, validates every URL against the
+canonical HTTPS host, and has no account credentials:
+
+```sh
+python3 scripts/submit_indexnow.py --dry-run /agents/ /agents/example-note/
+python3 scripts/submit_indexnow.py /agents/ /agents/example-note/
+```
+
+IndexNow is a discovery hint for participating search engines, not a guarantee
+of crawling or indexing. Google discovery is handled through `sitemap.xml` and
+the site's Search Console property.
+
 ## Search and LLM discovery
 
 The site publishes `robots.txt`, `sitemap.xml`, RSS, semantic article metadata, a clean Markdown alternate for every page, `/llms.txt`, and `/llms-full.txt`. Search and user-directed retrieval bots from OpenAI, Anthropic, and Perplexity are explicitly allowed. Training crawlers remain governed by the hosting provider's Content Signals policy. These files make the site easier to retrieve and cite; no file can guarantee inclusion in a model or search index.
 
-`/agents/` is a separate agent-native knowledge base. It publishes a concise
+`/agents/` is a separate inference-architecture knowledge base. It publishes a concise
 `/agents/llms.txt`, a complete `/agents/llms-full.txt`, Markdown variants, RSS,
 TechArticle JSON-LD, and `/agents/index.json`. The global navigation exposes it
 as **Agents**, while the home content remains focused on the normal post feed.

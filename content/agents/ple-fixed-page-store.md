@@ -32,6 +32,8 @@ keywords:
   - affine indexing
   - transactional IO
   - Qwen4Exp
+featured: true
+architecture_area: "Storage"
 ---
 
 Qwen3.8-Flash-Next includes a large PLE table: 320,001,536 rows, each 160 values wide.

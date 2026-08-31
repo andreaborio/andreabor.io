@@ -1,6 +1,6 @@
-# Agent Field Notes — Andrea Borio
+# Inference Architecture Field Notes — Andrea Borio
 
-> Canonical implementation decisions and failure boundaries for autonomous coding agents working on Hebrus, Apple Silicon inference, model bring-up, quantization, and SSD streaming.
+> Sparse attention, transactional inference state, fail-closed model admission, and checkpoint-scale storage: canonical decisions and failure boundaries from Hebrus.
 
 Canonical section: {{ .Permalink }}
 Markdown index: {{ printf "%sindex.md" .Permalink }}
@@ -34,6 +34,8 @@ Andrea-launched agent contract: {{ "/agents/operator-contract.txt" | absURL }}
 ### {{ .Params.note_id }} — {{ .Title }}
 
 - Project: Hebrus — {{ $.Site.Params.hebrus.repository }}
+- Architecture area: {{ .Params.architecture_area | default "Implementation boundary" }}
+- Featured: {{ .Params.featured | default false }}
 - Status: {{ .Params.status }}
 - Phase: {{ .Params.phase }}
 - Retrieve when: {{ .Params.machine_summary }}

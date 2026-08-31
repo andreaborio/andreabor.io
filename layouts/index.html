@@ -3,6 +3,23 @@
     <h1>I play with LLMs.</h1>
   </section>
 
+  {{ $featured := where (where .Site.RegularPages "Section" "agents") "Params.featured" true }}
+  <section class="home-agent-notes" aria-labelledby="architecture-notes">
+    <div class="section-heading">
+      <h2 id="architecture-notes">Inference architecture</h2>
+      <a href="{{ "/agents/" | relURL }}">All field notes</a>
+    </div>
+    <p class="home-agent-deck">Sparse attention, transactional state, fail-closed admission, and storage at checkpoint scale—short decision records with evidence and explicit limits.</p>
+    <ol class="home-agent-list">
+      {{ range first 4 $featured.ByDate.Reverse }}
+        <li>
+          <span>{{ .Params.architecture_area }} · {{ .Params.note_id }}</span>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+      {{ end }}
+    </ol>
+  </section>
+
   <section aria-labelledby="recent-posts">
     <div class="section-heading">
       <h2 id="recent-posts">Recent posts</h2>

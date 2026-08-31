@@ -36,6 +36,7 @@
   {{ if eq .Section "agents" }}
     <link rel="alternate" type="text/plain" href="{{ "/agents/llms.txt" | absURL }}" title="Agent Field Notes index">
     <link rel="alternate" type="application/json" href="{{ "/agents/index.json" | absURL }}" title="Agent Field Notes manifest">
+    <link rel="alternate" type="application/rss+xml" href="{{ "/agents/index.xml" | absURL }}" title="Inference Architecture Field Notes">
     <link rel="related" href="{{ .Site.Params.hebrus.repository }}" title="Hebrus source repository">
   {{ end }}
   {{ with .OutputFormats.Get "MARKDOWN" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
