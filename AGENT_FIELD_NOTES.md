@@ -57,6 +57,21 @@ context cost. `/agents/llms.txt` is the selector, each note's Markdown is the
 next retrieval tier, and `/agents/llms-full.txt` is an explicit full-corpus
 fallback. Agents should not ingest the full corpus by default.
 
+## Andrea-launched agent closeout
+
+Agents explicitly launched or operated by Andrea must follow the scoped public
+contract at `/agents/operator-contract.txt`. Before declaring a verified phase
+or architecture checkpoint complete, they run a decision-delta review and do
+one of two things:
+
+- publish or prepare an evidence-bound Field Note for each genuinely new,
+  reusable decision; or
+- record `Agent Field Notes: no new decision delta` in the handoff.
+
+The rule does not bind external contributors. It also does not weaken the
+publication gate: dirty, private, local-only, or unpublished work cannot anchor
+a verified note.
+
 ## Publication gate
 
 1. Confirm every cited source is public.

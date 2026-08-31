@@ -58,6 +58,11 @@ Every note must declare `note_id`, `status`, `phase`, `evidence`, `decision`,
 structural-only results stay labelled; a note may not manufacture a runtime or
 support claim from incomplete work.
 
+Agents explicitly launched by Andrea use
+`/agents/operator-contract.txt` as their phase-close rule. It requires a
+decision-delta review while leaving external contributors outside that personal
+operator policy.
+
 ## Refresh the Substack archive
 
 ```sh

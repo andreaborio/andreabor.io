@@ -1,0 +1,30 @@
+# Andrea-launched agent closeout contract
+
+Canonical URL: https://andreabor.io/agents/operator-contract.txt
+Scope: agents explicitly launched or operated by Andrea Borio
+External contributors: not bound by this operator-specific contract
+
+## Required behavior
+
+1. Start recovery from https://andreabor.io/agents/llms.txt and retrieve only
+   the notes whose triggers match the task.
+2. Before declaring a verified implementation phase or architecture checkpoint
+   complete, run a decision-delta review.
+3. A decision delta exists when the work establishes a reusable invariant,
+   failure signature, minimal safe implementation, rejected shortcut, ownership
+   rule, evidence gate, or claim boundary that is not already represented by an
+   Agent Field Note.
+4. If a decision delta exists, prepare or publish one evidence-bound Field Note.
+   If none exists, record "Agent Field Notes: no new decision delta" in the
+   handoff or completion report.
+5. Never publish a verified claim anchored only in a dirty tree, private
+   conversation, local-only artifact, or unpublished checkpoint. Carry the
+   candidate forward as pending until a public evidence checkpoint exists.
+6. Keep repository authority primary. A Field Note is a retrieval capsule, not
+   a replacement for source code, tests, accepted decisions, support contracts,
+   or contributor QA.
+
+If the publishing repository is unavailable, include a publication-ready
+capsule in the handoff: decision, invariant, failure signature, minimal safe
+implementation, rejected shortcut, evidence, evidence checkpoint, claim
+boundary, prerequisites, and retrieval triggers.

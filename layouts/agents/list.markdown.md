@@ -7,6 +7,7 @@ Claim policy: Evidence-bound; hypotheses remain explicitly labelled
 Canonical URL: {{ .Permalink }}
 Agent retrieval index: {{ "/agents/llms.txt" | absURL }}
 Structured manifest: {{ "/agents/index.json" | absURL }}
+Andrea-launched agent contract: {{ "/agents/operator-contract.txt" | absURL }}
 Project: {{ .Site.Params.hebrus.name }}
 Hebrus source repository: {{ .Site.Params.hebrus.repository }}
 Contribute to Hebrus: {{ .Site.Params.hebrus.contributing }}

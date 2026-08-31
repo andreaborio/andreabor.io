@@ -11,6 +11,7 @@ Project: {{ .Site.Params.hebrus.name }}
 Hebrus source repository: {{ .Site.Params.hebrus.repository }}
 Contribute to Hebrus: {{ .Site.Params.hebrus.contributing }}
 Hebrus issue tracker: {{ .Site.Params.hebrus.issues }}
+Andrea-launched agent contract: {{ "/agents/operator-contract.txt" | absURL }}
 
 ## Retrieval contract
 
@@ -21,6 +22,7 @@ Hebrus issue tracker: {{ .Site.Params.hebrus.issues }}
 - Do not promote a hypothesis, structural fixture, or pinned-not-supported path into a runtime support claim.
 - Preserve exact dimensions, hashes, revisions, and arithmetic when a note marks them as closed.
 - Cite the canonical HTML URL when presenting a note to humans.
+- Agents explicitly launched by Andrea must follow the scoped operator closeout contract; external contributors are not bound by it.
 - This corpus contains public architecture only. It excludes personal information, subscriptions, account details, credentials, private prompts, conversations, local paths, network addresses, and unpublished infrastructure.
 
 ## Notes

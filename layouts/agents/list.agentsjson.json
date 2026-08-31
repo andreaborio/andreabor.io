@@ -39,6 +39,7 @@
   "canonical_url" .Permalink
   "project" (dict "name" .Site.Params.hebrus.name "repository_url" .Site.Params.hebrus.repository "contributing_url" .Site.Params.hebrus.contributing "issues_url" .Site.Params.hebrus.issues)
   "retrieval_policy" "Select one note from retrieval_triggers and estimated_tokens; load its capsule before its full body. Treat status, evidence, invariant and claim_boundary as normative."
+  "operator_contract" (dict "scope" "Agents explicitly launched or operated by Andrea Borio; external contributors are not bound" "url" ("/agents/operator-contract.txt" | absURL) "closeout_rule" "Before closing a verified phase, publish an evidence-bound decision delta or explicitly record that none exists")
   "privacy_policy" "Public architecture only. Excludes personal information, subscriptions, accounts, credentials, private prompts, conversations, local paths, network addresses, and unpublished infrastructure."
   "notes" $notes
   | jsonify -}}
