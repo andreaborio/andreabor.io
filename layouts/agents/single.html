@@ -5,14 +5,12 @@
   {{ $fullTokens := div (add (len .RawContent) 3) 4 }}
   <article class="agent-note" itemscope itemtype="https://schema.org/TechArticle">
     <header class="agent-note-header">
-      <div class="agent-note-topline">
-        <span>{{ .Params.note_id }} · Agent Field Note</span>
-        <span class="agent-status">{{ .Params.status }}</span>
-      </div>
       <h1 itemprop="headline">{{ .Title }}</h1>
       <p class="lede" itemprop="description">{{ .Description }}</p>
 
       <dl class="agent-note-facts">
+        <div><dt>Note</dt><dd>{{ .Params.note_id }} · Agent Field Note</dd></div>
+        <div><dt>Status</dt><dd>{{ .Params.status }}</dd></div>
         <div><dt>Phase</dt><dd>{{ .Params.phase }}</dd></div>
         <div><dt>Evidence</dt><dd>{{ .Params.evidence }}</dd></div>
         <div><dt>Published</dt><dd><time itemprop="datePublished" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></dd></div>
@@ -20,8 +18,7 @@
     </header>
 
     <aside class="hebrus-project" aria-labelledby="hebrus-project-title" itemprop="about" itemscope itemtype="https://schema.org/SoftwareSourceCode">
-      <p class="hebrus-project-label" id="hebrus-project-title">Built in the open with</p>
-      <h2 itemprop="name">{{ .Site.Params.hebrus.name }}</h2>
+      <h2 id="hebrus-project-title"><span>Built in the open with </span><span itemprop="name">{{ .Site.Params.hebrus.name }}</span></h2>
       <p>These field notes come from implementing local, Metal-first LLM inference in Hebrus. Reproduce the evidence, report a boundary case, or contribute the next verified step.</p>
       <nav aria-label="Hebrus project links">
         <a itemprop="codeRepository" href="{{ .Site.Params.hebrus.repository }}">Hebrus source repository</a>

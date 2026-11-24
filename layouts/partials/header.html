@@ -1,9 +1,12 @@
 <header class="site-header">
-  <a class="site-name" href="{{ "/" | relURL }}">Andrea Borio</a>
-  <nav aria-label="Main navigation">
-    <a href="{{ "/posts/" | relURL }}">Posts</a>
-    <a href="{{ "/agents/" | relURL }}">Agents</a>
-    <a href="{{ "/about/" | relURL }}">About</a>
-    <a href="{{ "/now/" | relURL }}">Now</a>
-  </nav>
+  <div class="site-bar">
+    <a class="site-name fx" href="{{ "/" | relURL }}">Andrea Borio</a>
+    <nav aria-label="Main navigation">
+      <a href="{{ "/posts/" | relURL }}"{{ if eq .Section "posts" }} aria-current="page"{{ end }}>Posts</a>
+      <a href="{{ "/agents/" | relURL }}"{{ if eq .Section "agents" }} aria-current="page"{{ end }}>Agents</a>
+      <a href="{{ "/about/" | relURL }}"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>About</a>
+      <a href="{{ "/now/" | relURL }}"{{ if eq .RelPermalink "/now/" }} aria-current="page"{{ end }}>Now</a>
+    </nav>
+  </div>
+  <div class="rail" aria-hidden="true"><span class="walker">{{ partial "dotto.html" (dict "mode" "walk" "size" 22) }}</span></div>
 </header>

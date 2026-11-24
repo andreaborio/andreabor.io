@@ -1,0 +1,9 @@
+{{- /* Dotto as an animated inline sprite. mode: walk | idle | sleep | dizzy. CSS steps() does the frames; reduced motion shows the first frame. */ -}}
+{{- $mode := .mode | default "idle" -}}
+{{- $frames := slice "idle" "blink" -}}
+{{- if eq $mode "walk" }}{{ $frames = slice "run1" "run2" "run3" "run4" }}{{ end -}}
+{{- if eq $mode "sleep" }}{{ $frames = slice "sleep" }}{{ end -}}
+{{- if eq $mode "dizzy" }}{{ $frames = slice "dizzy" }}{{ end -}}
+<svg class="dotto dotto-{{ $mode }}" viewBox="0 0 9 9" width="{{ .size | default 36 }}" height="{{ .size | default 36 }}" aria-hidden="true" focusable="false">
+  {{ range $i, $f := $frames }}<use href="#d-{{ $f }}" class="fr" style="--i:{{ $i }}"/>{{ end }}
+</svg>

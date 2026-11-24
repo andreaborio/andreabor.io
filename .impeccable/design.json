@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-24T23:45:00Z",
+  "title": "Design System: andreabor.io",
+  "extensions": {
+    "colorMeta": {
+      "black-glass": { "role": "neutral", "displayName": "Black Glass", "canonical": "#0a0a0a", "tonalRamp": ["#0a0a0a", "#151515", "#202020", "#2a2a2a", "#3a3a3a", "#666664", "#a6a6a2", "#f2f2f0"] },
+      "code-well": { "role": "neutral", "displayName": "Code Well", "canonical": "#151515", "tonalRamp": ["#050505", "#0a0a0a", "#101010", "#151515", "#1d1d1d", "#2a2a2a", "#444444", "#666666"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#2a2a2a", "tonalRamp": ["#0a0a0a", "#151515", "#1f1f1f", "#2a2a2a", "#3a3a3a", "#4a4a4a", "#666666", "#8a8a88"] },
+      "warm-ink": { "role": "neutral", "displayName": "Warm Ink", "canonical": "#f2f2f0", "tonalRamp": ["#3a3a39", "#5c5c5a", "#85857f", "#a6a6a2", "#c4c4c0", "#dcdcd9", "#f2f2f0", "#fbfbfa"] },
+      "muted-ink": { "role": "neutral", "displayName": "Muted Ink", "canonical": "#a6a6a2", "tonalRamp": ["#242423", "#3d3d3b", "#5c5c5a", "#7f7f7b", "#a6a6a2", "#bdbdb9", "#d4d4d1", "#e9e9e7"] },
+      "heat-red": { "role": "primary", "displayName": "Heat Red", "canonical": "#ff7a6b", "tonalRamp": ["#3d1511", "#6b2119", "#9a2f24", "#cc4a3b", "#ff7a6b", "#ff9e92", "#ffc3bb", "#ffe5e1"] },
+      "mint-agent": { "role": "secondary", "displayName": "Agent Mint", "canonical": "#7fe0b0", "tonalRamp": ["#0e2a1d", "#17432f", "#226048", "#2f8a66", "#7fe0b0", "#a0eac6", "#c3f2dc", "#e6faef"] },
+      "mint-well": { "role": "secondary", "displayName": "Mint Well", "canonical": "#0e1713", "tonalRamp": ["#060b09", "#0a110e", "#0e1713", "#14231c", "#1b3126", "#26493a", "#356650", "#4b8a6c"] },
+      "selection-ember": { "role": "neutral", "displayName": "Selection Ember", "canonical": "#3a1512", "tonalRamp": ["#1a0907", "#2a100d", "#3a1512", "#4f1d18", "#6b2820", "#8c352b", "#b0463a", "#d4604f"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Home H1 in Doto 800 with CRT fringe; one per page." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings and page H1 in Doto 800 with fringe." },
+      "title": { "displayName": "Title", "purpose": "Post links and card titles in system sans 650." },
+      "body": { "displayName": "Body", "purpose": "Reading column at 68ch, system sans, 1.7 line height." },
+      "label": { "displayName": "Label", "purpose": "Meta, nav, captions, Agents facts; never under 13.5px." },
+      "code": { "displayName": "Code", "purpose": "Inline code and blocks only." }
+    },
+    "shadows": [
+      { "name": "fringe", "value": "-1px 0 rgba(80,200,255,.45), 1px 0 rgba(255,80,60,.45), 0 0 12px rgba(255,255,255,.16)", "purpose": "CRT colour fringe as text-shadow on Doto chrome text only." },
+      { "name": "dotto-glow", "value": "drop-shadow(0 0 3px rgba(255,255,255,.3))", "purpose": "Soft emitted light around the mascot (filter)." },
+      { "name": "phosphor-glow", "value": "-1px 0 rgba(80,200,255,.45), 1px 0 rgba(255,80,60,.45), 0 0 12px rgba(255,255,255,.16), 0 0 10px rgba(255,255,255,.3)", "purpose": "Fringe plus a brighter white bloom on the Puck title only (text-shadow)." },
+      { "name": "puck-bezel", "value": "0 50px 90px -30px #000, 0 16px 28px -12px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.08)", "purpose": "Ground shadow and top highlight of the Puck bezel; the only cast shadow in the system." }
+    ],
+    "motion": [
+      { "name": "rail-stroll", "value": "36s steps(90) infinite alternate", "purpose": "Dotto walking the header rail, one dot at a time." },
+      { "name": "walk-frames", "value": ".64s steps(1, end) infinite", "purpose": "Four-frame run cycle, .16s per frame." },
+      { "name": "idle-blink", "value": "5s steps(1, end) infinite", "purpose": "Idle pose with a blink at 92-100% of the cycle." },
+      { "name": "puck-orbit", "value": "60s steps(60) infinite", "purpose": "Dotto round the Puck rim, one dot per second." },
+      { "name": "breathe", "value": "3s steps(2, end) infinite alternate", "purpose": "Sleeping Dotto, 1px rise." },
+      { "name": "sway", "value": "1.2s steps(3, end) infinite alternate", "purpose": "Dizzy Dotto on the 404, +-3deg." },
+      { "name": "drift", "value": "3s steps(6) infinite", "purpose": "Stepped zzz rising by the sleeping footer Dotto." },
+      { "name": "hover-fade", "value": ".15s border-color, background", "purpose": "Only smooth transition: hero link hover." },
+      { "name": "reduced-motion", "value": "animation: none !important; first frame visible", "purpose": "Every animation is disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "700px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Header navigation item; current page shows hairline border and heat red.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">Posts</a><a class=\"ds-nav-link\" href=\"#\" aria-current=\"page\">Agents</a><a class=\"ds-nav-link\" href=\"#\">About</a></nav>",
+      "css": ".ds-nav { display: flex; gap: .4rem; font-family: ui-sans-serif, system-ui, sans-serif; } .ds-nav-link { padding: .25rem .7rem; border: 1px solid transparent; border-radius: 9px; color: #a6a6a2; font-size: .95rem; text-decoration: none; } .ds-nav-link:hover { border-color: #2a2a2a; color: #f2f2f0; } .ds-nav-link[aria-current=\"page\"] { border-color: #2a2a2a; color: #ff7a6b; } .ds-nav-link:focus-visible { outline: 2px solid #ff7a6b; outline-offset: 4px; }"
+    },
+    {
+      "name": "Hero Link",
+      "kind": "button",
+      "refersTo": "hero-link",
+      "description": "Outlined link-button on the home hero; there is no filled primary.",
+      "html": "<a class=\"ds-hero-link\" href=\"#\">Dotto series</a>",
+      "css": ".ds-hero-link { display: inline-block; padding: .45rem .75rem; border: 1px solid #2a2a2a; border-radius: 9px; color: #f2f2f0; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .92rem; text-decoration: none; transition: border-color .15s, background .15s; } .ds-hero-link:hover { border-color: #4a4a4a; background: #141414; } .ds-hero-link:focus-visible { outline: 2px solid #ff7a6b; outline-offset: 4px; }"
+    },
+    {
+      "name": "Post List Row",
+      "kind": "custom",
+      "refersTo": "nav-link",
+      "description": "Date in Doto heat red, title in ink, muted blurb, hairline floor.",
+      "html": "<div class=\"ds-row\"><time class=\"ds-row-date\">2026-11-12</time><a class=\"ds-row-title\" href=\"#\">What ran, what stalled</a><p class=\"ds-row-blurb\">A measured note with its caveats attached.</p></div>",
+      "css": ".ds-row { display: grid; grid-template-columns: 8.2rem minmax(0, 1fr); column-gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid #2a2a2a; font-family: ui-sans-serif, system-ui, sans-serif; } .ds-row-date { grid-column: 1; grid-row: 1; color: #ff7a6b; font-family: Doto, ui-monospace, monospace; font-size: 1rem; font-weight: 800; } .ds-row-title { grid-column: 2; grid-row: 1; color: #f2f2f0; font-weight: 650; text-decoration: none; } .ds-row-title:hover { color: #ff7a6b; } .ds-row-title:focus-visible { outline: 2px solid #ff7a6b; outline-offset: 4px; } .ds-row-blurb { grid-column: 2; margin: .35rem 0 0; color: #a6a6a2; font-size: .92rem; }"
+    },
+    {
+      "name": "Puck",
+      "kind": "custom",
+      "refersTo": "puck",
+      "description": "Round dot-matrix masthead: conic metal bezel, dotted glass with vignette and scanlines, latest post in Doto.",
+      "html": "<a class=\"ds-puck\" href=\"#\"><span class=\"ds-puck-bezel\"><span class=\"ds-puck-glass\"><span class=\"ds-puck-body\"><span class=\"ds-puck-title\">Latest post title goes here</span><span class=\"ds-puck-date\">2026-11-12</span></span></span></span></a>",
+      "css": ".ds-puck { display: block; width: 240px; color: #f2f2f0; text-decoration: none; } .ds-puck-bezel { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 200deg, #202020, #444 14%, #1d1d1d 30%, #161616 46%, #3a3a3a 62%, #1b1b1b 78%, #303030 92%, #202020); box-shadow: 0 50px 90px -30px #000, 0 16px 28px -12px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.08); } .ds-puck-bezel::before { content: \"\"; position: absolute; inset: 3px; border-radius: 50%; background: #030303; } .ds-puck-glass { position: relative; display: block; width: calc(100% - 30px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: #000; container-type: size; } .ds-puck-glass::before { content: \"\"; position: absolute; inset: 0; background: radial-gradient(circle, rgba(255,255,255,.2) 1.1px, transparent 1.7px) 0 0 / 11px 11px; } .ds-puck-glass::after { content: \"\"; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 50% 42%, transparent 52%, rgba(0,0,0,.7) 100%), repeating-linear-gradient(0deg, rgba(0,0,0,.38) 0 1px, transparent 1px 3px), radial-gradient(circle, transparent 58%, rgba(255,90,60,.12) 100%); } .ds-puck-body { position: absolute; inset: 0; display: grid; place-content: center; gap: .6rem; padding: 21%; text-align: center; } .ds-puck-title { font-family: Doto, ui-monospace, monospace; font-weight: 800; font-size: clamp(.8rem, 6.4cqi, 1.3rem); line-height: 1.25; text-shadow: -1px 0 rgba(80,200,255,.45), 1px 0 rgba(255,80,60,.45), 0 0 12px rgba(255,255,255,.16), 0 0 10px rgba(255,255,255,.3); } .ds-puck-date { color: #ff7a6b; font-family: Doto, ui-monospace, monospace; font-weight: 800; font-size: clamp(.78rem, 5.6cqi, 1.1rem); } .ds-puck:hover .ds-puck-title { color: #ff7a6b; } .ds-puck:focus-visible { outline: 2px solid #ff7a6b; outline-offset: 4px; }"
+    },
+    {
+      "name": "Dotto Idle",
+      "kind": "custom",
+      "refersTo": "puck",
+      "description": "The mascot as SVG dots on a 9x9 grid, with a stepped blink; first frame shown under reduced motion.",
+      "html": "<svg class=\"ds-dotto\" viewBox=\"0 0 9 9\" width=\"72\" height=\"72\" aria-hidden=\"true\"><g class=\"ds-open\"><circle cx=\"3.5\" cy=\"1.5\" r=\".43\"/><circle cx=\"4.5\" cy=\"1.5\" r=\".43\"/><circle cx=\"5.5\" cy=\"1.5\" r=\".43\"/><circle cx=\"1.5\" cy=\"2.5\" r=\".43\"/><circle cx=\"2.5\" cy=\"2.5\" r=\".43\"/><circle cx=\"3.5\" cy=\"2.5\" r=\".43\"/><circle cx=\"4.5\" cy=\"2.5\" r=\".43\"/><circle cx=\"5.5\" cy=\"2.5\" r=\".43\"/><circle cx=\"6.5\" cy=\"2.5\" r=\".43\"/><circle cx=\"7.5\" cy=\"2.5\" r=\".43\"/><circle cx=\"0.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"1.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"2.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"3.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"4.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"5.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"6.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"7.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"8.5\" cy=\"3.5\" r=\".43\"/><circle cx=\"0.5\" cy=\"4.5\" r=\".43\"/><circle cx=\"1.5\" cy=\"4.5\" r=\".43\"/><circle cx=\"3.5\" cy=\"4.5\" r=\".43\"/><circle cx=\"4.5\" cy=\"4.5\" r=\".43\"/><circle cx=\"5.5\" cy=\"4.5\" r=\".43\"/><circle cx=\"7.5\" cy=\"4.5\" r=\".43\"/><circle cx=\"8.5\" cy=\"4.5\" r=\".43\"/><circle cx=\"0.5\" cy=\"5.5\" r=\".43\"/><circle cx=\"1.5\" cy=\"5.5\" r=\".43\"/><circle cx=\"3.5\" cy=\"5.5\" r=\".43\"/><circle cx=\"4.5\" cy=\"5.5\" r=\".43\"/><circle cx=\"5.5\" cy=\"5.5\" r=\".43\"/><circle cx=\"7.5\" cy=\"5.5\" r=\".43\"/><circle cx=\"8.5\" cy=\"5.5\" r=\".43\"/><circle cx=\"0.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"1.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"2.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"3.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"4.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"5.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"6.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"7.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"8.5\" cy=\"6.5\" r=\".43\"/><circle cx=\"1.5\" cy=\"7.5\" r=\".43\"/><circle cx=\"2.5\" cy=\"7.5\" r=\".43\"/><circle cx=\"3.5\" cy=\"7.5\" r=\".43\"/><circle cx=\"4.5\" cy=\"7.5\" r=\".43\"/><circle cx=\"5.5\" cy=\"7.5\" r=\".43\"/><circle cx=\"6.5\" cy=\"7.5\" r=\".43\"/><circle cx=\"7.5\" cy=\"7.5\" r=\".43\"/><circle cx=\"2.5\" cy=\"8.5\" r=\".43\"/><circle cx=\"6.5\" cy=\"8.5\" r=\".43\"/></g></svg>",
+      "css": ".ds-dotto { display: block; fill: #f2f2f0; filter: drop-shadow(0 0 3px rgba(255,255,255,.3)); overflow: visible; }"
+    },
+    {
+      "name": "Agents Hero",
+      "kind": "card",
+      "refersTo": "agent-hero",
+      "description": "Square mint-bordered well with a dotted mint texture, opening the Agents section.",
+      "html": "<section class=\"ds-agent-hero\"><h1 class=\"ds-agent-h1\">Decision records</h1><p class=\"ds-agent-deck\">Inference architecture notes, with what each result does not prove.</p></section>",
+      "css": ".ds-agent-hero { position: relative; padding: 1.45rem 1.6rem 1.25rem; overflow: hidden; border: 1px solid #7fe0b0; background: radial-gradient(circle, rgba(127,224,176,.22) 1px, transparent 1.6px) 0 0 / 16px 16px, #0e1713; color: #f2f2f0; font-family: ui-sans-serif, system-ui, sans-serif; } .ds-agent-h1 { max-width: 13ch; margin: 0 0 .65rem; font-family: Doto, ui-monospace, monospace; font-weight: 800; font-size: 2.6rem; line-height: 1.15; letter-spacing: 0; text-shadow: -1px 0 rgba(80,200,255,.45), 1px 0 rgba(255,80,60,.45), 0 0 12px rgba(255,255,255,.16); } .ds-agent-deck { max-width: 54ch; margin: 0; color: #a6a6a2; font-size: .96rem; }"
+    },
+    {
+      "name": "Machine Link",
+      "kind": "chip",
+      "refersTo": "machine-link",
+      "description": "Outlined mint link to a machine-readable output; hover fills with black glass.",
+      "html": "<a class=\"ds-machine-link\" href=\"#\">llms.txt</a>",
+      "css": ".ds-machine-link { display: inline-block; padding: .34rem .55rem; border: 1px solid #7fe0b0; color: #7fe0b0; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .75rem; font-weight: 700; text-decoration: none; } .ds-machine-link:hover { background: #0a0a0a; } .ds-machine-link:focus-visible { outline: 2px solid #7fe0b0; outline-offset: 4px; }"
+    },
+    {
+      "name": "Agent Tag",
+      "kind": "chip",
+      "refersTo": "agent-tag",
+      "description": "Square mint tag on a mint well, used in note cards.",
+      "html": "<span class=\"ds-agent-tag\">metal</span>",
+      "css": ".ds-agent-tag { display: inline-block; padding: .12rem .38rem; background: #0e1713; color: #7fe0b0; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .75rem; }"
+    },
+    {
+      "name": "Code Block",
+      "kind": "custom",
+      "refersTo": "code-block",
+      "description": "Code on the Code Well with a hairline border and 6px radius; long lines scroll.",
+      "html": "<pre class=\"ds-code\"><code>ds4-server --kv-disk-dir ./kv</code></pre>",
+      "css": ".ds-code { overflow-x: auto; margin: 0; padding: 1rem; border: 1px solid #2a2a2a; border-radius: 6px; background: #151515; color: #f2f2f0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .88em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Device Under Glass",
+    "overview": "The site is a calm reading frame owned by a small object: Dotto's round dot-matrix display. Everything that is chrome (masthead, dates, section heads, rail, footer) is drawn as that device would draw it: dots, a CRT colour fringe, scanlines, a conic-metal bezel. Everything that is argument (articles, tables, code, Agents notes) is plain system-sans text on black glass. The frame carries personality, the column carries truth.\n\nDensity is low and rhythmic: one reading column at 820px, generous vertical gaps between sections (4rem), hairline rules instead of boxes. The world is dark only (color-scheme: dark), warm-white ink on near-black, with a single heat-red for links and dates and a mint reserved for the Agents section. The mascot is the only illustration: a 9-wide pixel creature drawn as SVG circles and animated purely with CSS steps(), so it moves like a display, never like a tween.",
+    "keyCharacteristics": [
+      "Black glass ground with a 14px dot grid at 5% white.",
+      "Doto (self-hosted, weight 800) for display, dates, section heads and project names; system sans for reading; mono only for code.",
+      "CRT fringe (cyan left, red right, soft white glow) on Doto text only.",
+      "Hairline #2a2a2a rules; dotted rules for section breaks and quotes.",
+      "Dotto in five poses (walk, idle, blink, sleep, dizzy) from one SVG sprite, stepped frame by frame.",
+      "Mint Agents section inside the same frame, with square corners; its index and the home teaser are ruled single-column rows, never cards.",
+      "No eyebrow labels above headings and no glyph arrows: headings stand alone and links are plain words."
+    ],
+    "rules": [
+      { "name": "The Two-Accent Rule", "body": "Heat red for the open site, mint for Agents; the two never share a component. The Hebrus project block is mint on all four sides (1px border on Mint Well), with no red edge.", "section": "colors" },
+      { "name": "The Glass-Not-Paper Rule", "body": "Surfaces are black or a near-black well. No white or cream panels, ever.", "section": "colors" },
+      { "name": "The Doto-Is-Chrome Rule", "body": "Doto sets short strings (names, dates, headings, project names). Paragraphs, table cells and code never use it.", "section": "typography" },
+      { "name": "The Fringe-On-Doto Rule", "body": "The --fringe text-shadow belongs to Doto text only, never to sans body.", "section": "typography" },
+      { "name": "The Chrome-Only Scanline Rule", "body": "Scanlines (repeating-linear-gradient 1px in 3px at .38 black) and the fringe appear on the Puck glass and Doto chrome text. The reading column, tables and code get neither.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep reading text in the system sans on #0a0a0a at 68ch; keep Doto to short strings.",
+      "Do use heat red (#ff7a6b) for links, dates and focus (2px outline, 4px offset) outside Agents, and mint (#7fe0b0) inside Agents only.",
+      "Do animate with steps() only (rail walk, walk cycle, orbit, breathe, sway, drift), and add every new animation to the reduced-motion block.",
+      "Do use hairline #2a2a2a 1px rules and dotted rules for breaks; build depth from wells and the device, not from shadows.",
+      "Do give any new dot texture a pitch from the existing set (8, 11, 14, 16px).",
+      "Do keep body and functional text at or above 13.5px."
+    ],
+    "donts": [
+      "Don't put scanlines or the colour fringe on article body, tables or code.",
+      "Don't use cream or white panels, light mode, or card-grid blog layouts on the open site.",
+      "Don't set body copy, tables or long strings in Doto, or body copy in monospace.",
+      "Don't round Agents components, and don't use mint outside Agents content (its home teaser included).",
+      "Don't render Agents or post indexes as cards: they are ruled single-column rows.",
+      "Don't tween Dotto smoothly or add JavaScript for animation without a decision to add the canvas layer.",
+      "Don't add eyebrow or kicker labels above headings, or glyph arrows on links. The build has none; the one small mint label that remains (the \"Retrieval capsule\" caption in the briefing heading row) is a caption beside a cost figure, not a pattern for new surfaces."
+    ]
+  }
+}

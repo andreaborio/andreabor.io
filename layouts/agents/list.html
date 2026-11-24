@@ -1,6 +1,5 @@
 {{ define "main" }}
   <section class="agent-hero" aria-labelledby="agent-title">
-    <p class="agent-kicker"><span aria-hidden="true"></span> Agent-native knowledge base</p>
     <h1 id="agent-title">{{ .Title }}</h1>
     <div class="agent-deck">{{ .Content }}</div>
 
@@ -22,15 +21,11 @@
     <ol class="agent-featured-grid">
       {{ range $featured.ByDate.Reverse }}
         <li>
-          <div class="agent-note-topline">
-            <span>{{ .Params.architecture_area }}</span>
-            <span>{{ .Params.note_id }}</span>
-          </div>
           <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
           <p>{{ .Description }}</p>
           <div class="agent-featured-footer">
+            <span>{{ .Params.architecture_area }} · {{ .Params.note_id }}</span>
             <span class="agent-status">{{ .Params.status }}</span>
-            <span>Read decision →</span>
           </div>
         </li>
       {{ end }}
@@ -45,14 +40,11 @@
     <ol class="agent-note-list">
       {{ range .Pages.ByDate.Reverse }}
         <li>
-          <div class="agent-note-topline">
-            <span>{{ .Params.note_id }}</span>
-            <span class="agent-status">{{ .Params.status }}</span>
-          </div>
           <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
           <p>{{ .Description }}</p>
           <div class="agent-note-meta">
-            <span>Phase {{ .Params.phase }}</span>
+            <span>{{ .Params.note_id }} · Phase {{ .Params.phase }}</span>
+            <span class="agent-status">{{ .Params.status }}</span>
             <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time>
           </div>
           {{ with .Params.keywords }}

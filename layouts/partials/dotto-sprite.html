@@ -1,0 +1,11 @@
+{{- /* One sprite sheet per page: Dotto's poses as dots on a 9x9 grid, feet on the bottom row. Poses come from the Pip engine in the Dotto prototype. */ -}}
+<svg class="sprite-sheet" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    {{ range $name, $rows := hugo.Data.dotto }}
+      {{ $off := sub 9 (len $rows) }}
+      <g id="d-{{ $name }}">
+        {{ range $y, $row := $rows }}{{ range $x, $c := split $row "" }}{{ if eq $c "#" }}<circle cx="{{ add $x 0.5 }}" cy="{{ add (add $y $off) 0.5 }}" r="0.43"/>{{ end }}{{ end }}{{ end }}
+      </g>
+    {{ end }}
+  </defs>
+</svg>

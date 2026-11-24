@@ -1,0 +1,62 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "static/css/style.css"
+        ],
+        "createdAt": "2026-11-24T21:05:12.881Z",
+        "reason": "scanlines are the CRT effect of the Dotto world the user pinned (decided by assistant, user chose the CRT look)"
+      },
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-11-24T21:05:12.925Z",
+        "reason": "scanlines are the CRT effect of the Dotto world the user pinned (decided by assistant, user chose the CRT look)"
+      },
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "public/agents/index.html"
+        ],
+        "createdAt": "2026-11-24T21:05:12.951Z",
+        "reason": "scanlines are the CRT effect of the Dotto world the user pinned (decided by assistant, user chose the CRT look)"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "static/css/style.css"
+        ],
+        "createdAt": "2026-11-24T21:05:12.979Z",
+        "reason": "puck-glass is the round display itself; its text sits in .puck-body with a 21% inset (decided by assistant)"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-11-24T21:05:13.005Z",
+        "reason": "puck-glass is the round display itself; its text sits in .puck-body with a 21% inset (decided by assistant)"
+      },
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "public/**/index.html"
+        ],
+        "createdAt": "2026-11-24T21:06:20.580Z",
+        "reason": "the CRT scanlines live in the one shared stylesheet (static/css/style.css) and show up on every generated page; they are the CRT effect of the Dotto world the user pinned; assistant decided the ignore"
+      }
+    ]
+  }
+}

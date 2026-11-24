@@ -1,6 +1,27 @@
 {{ define "main" }}
-  <section class="intro">
-    <h1>I play with LLMs.</h1>
+  {{ $latest := index (first 1 (where .Site.RegularPages "Section" "posts")) 0 }}
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-text">
+      <h1 id="hero-title" class="fx">I play with LLMs.</h1>
+      <p class="hero-lede">I build local inference engines for Apple Silicon, write down what ran and what stalled, and make a small round thing with a character inside.</p>
+      <p class="hero-links">
+        <a href="{{ "/posts/" | relURL }}">Posts</a>
+        <a href="{{ "/agents/" | relURL }}">Agents</a>
+        <a href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">Dotto series</a>
+        <a href="{{ "/dotto/play/" | relURL }}">Live Dotto</a>
+      </p>
+    </div>
+    <a class="puck" href="{{ $latest.RelPermalink }}" aria-label="Latest post: {{ $latest.Title }}">
+      <span class="puck-bezel">
+        <span class="puck-glass">
+          <span class="puck-body">
+            <span class="puck-title fx">{{ $latest.Title }}</span>
+            <time class="puck-date fx" datetime="{{ $latest.Date.Format "2006-01-02" }}">{{ $latest.Date.Format "2 Jan 2006" }}</time>
+          </span>
+          <span class="puck-orbit" aria-hidden="true"><span class="puck-dotto">{{ partial "dotto.html" (dict "mode" "walk" "size" 34) }}</span></span>
+        </span>
+      </span>
+    </a>
   </section>
 
   {{ $featured := where (where .Site.RegularPages "Section" "agents") "Params.featured" true }}
@@ -13,11 +34,21 @@
     <ol class="home-agent-list">
       {{ range first 4 $featured.ByDate.Reverse }}
         <li>
-          <span>{{ .Params.architecture_area }} · {{ .Params.note_id }}</span>
           <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          <span>{{ .Params.architecture_area }} · {{ .Params.note_id }}</span>
         </li>
       {{ end }}
     </ol>
+  </section>
+
+  <section class="building" aria-labelledby="building">
+    <div class="section-heading"><h2 id="building">What I build</h2></div>
+    <ul class="project-list">
+      <li><a href="https://github.com/andreaborio/hebrus">Hebrus</a><span>Metal-first inference for Apple Silicon, with adaptive SSD streaming.</span></li>
+      <li><a href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">Dotto</a><span>A round desk object with a dot-matrix display and a character inside. <a href="{{ "/dotto/play/" | relURL }}">Try the prototype</a>.</span></li>
+      <li><a href="https://github.com/andreaborio/forgequant">forgequant</a><span>Making quantization experiments cheaper.</span></li>
+      <li><a href="https://github.com/andreaborio/benchy">benchy</a><span>And an experimental <a href="https://github.com/andreaborio/ds4">ds4 fork</a>.</span></li>
+    </ul>
   </section>
 
   <section aria-labelledby="recent-posts">

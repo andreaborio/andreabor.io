@@ -9,6 +9,10 @@ A text-only Hugo site for Andrea Borio.
 - Existing Substack posts are imported from the public RSS feed with their original title, publication date, links, code, and body text.
 - Substack signup widgets and images are omitted to keep this site text-only. Each imported post links back to its original page.
 
+## Images and the Dotto demo
+
+The site is text-only except for one series. The Dotto making-of posts (`content/posts/dotto-*.md`) use screenshots under `static/img/dotto/`, rendered as `<figure>` by `layouts/_default/_markup/render-image.html`. Several images in one paragraph become a grid; a lone image with a title becomes a captioned figure. `static/dotto/play/` is a copy of the Dotto browser prototype. It runs JavaScript and loads Geist and Doto from Google Fonts, so it is the one exception to the no-JavaScript, no-external-fonts rule. Nothing else on the site is affected.
+
 ## Local development
 
 ```sh

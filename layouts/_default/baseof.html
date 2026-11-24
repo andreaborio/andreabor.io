@@ -40,6 +40,7 @@
     <link rel="related" href="{{ .Site.Params.hebrus.repository }}" title="Hebrus source repository">
   {{ end }}
   {{ with .OutputFormats.Get "MARKDOWN" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
+  <link rel="preload" href="{{ "fonts/doto-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
   <link rel="alternate" type="application/rss+xml" href="{{ "index.xml" | absURL }}" title="{{ .Site.Title }}">
   {{ if and (eq .Section "agents") .IsPage }}
@@ -69,6 +70,7 @@
   {{ end }}
 </head>
 <body>
+  {{ partial "dotto-sprite.html" . }}
   <a class="skip-link" href="#content">Skip to content</a>
   <div class="shell">
     {{ partial "header.html" . }}

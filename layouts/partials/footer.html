@@ -1,14 +1,13 @@
-<footer>
-  <p>
-    <a href="https://github.com/andreaborio">GitHub</a>
-    <span aria-hidden="true">·</span>
-    <a href="https://huggingface.co/andreaborio">Hugging Face</a>
-    <span aria-hidden="true">·</span>
-    <a href="https://linkedin.com/in/borioandrea">LinkedIn</a>
-    <span aria-hidden="true">·</span>
-    <a href="mailto:hey@andreabor.io">Email</a>
-    <span aria-hidden="true">·</span>
-    <a href="{{ "/index.xml" | relURL }}">RSS</a>
-  </p>
-  <p class="muted">© {{ now.Format "2006" }} Andrea Borio. Corrections and track IDs are welcome.</p>
+<footer class="site-footer">
+  <div class="foot-dotto" aria-hidden="true">{{ partial "dotto.html" (dict "mode" "sleep" "size" 40) }}<span class="zzz"><i></i><i></i><i></i></span></div>
+  <div class="foot-text">
+    <p class="foot-links">
+      <a href="https://github.com/andreaborio">GitHub</a>
+      <a href="https://huggingface.co/andreaborio">Hugging Face</a>
+      <a href="https://linkedin.com/in/borioandrea">LinkedIn</a>
+      <a href="mailto:hey@andreabor.io">Email</a>
+      <a href="{{ "/index.xml" | relURL }}">RSS</a>
+    </p>
+    <p class="muted">© {{ now.Format "2006" }} Andrea Borio. Corrections and track IDs are welcome.</p>
+  </div>
 </footer>
