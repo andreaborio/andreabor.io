@@ -1,0 +1,5 @@
+{{- if .IsBlock -}}
+<figure><img src="{{ .Destination | safeURL }}" alt="{{ .PlainText }}" loading="lazy" decoding="async">{{ with .Title }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}</figure>
+{{- else -}}
+<img src="{{ .Destination | safeURL }}" alt="{{ .PlainText }}" title="{{ .Title }}" loading="lazy" decoding="async">
+{{- end -}}

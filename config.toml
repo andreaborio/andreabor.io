@@ -51,5 +51,7 @@ summaryLength = 28
 
 [markup]
   [markup.goldmark]
+    [markup.goldmark.parser]
+      wrapStandAloneImageWithinParagraph = false
     [markup.goldmark.renderer]
       unsafe = true

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dotto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Doto:ROND,wght@100,900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* One dot grid for the whole screen: white light on black glass, one red for heat.
+     The rim carries signal, the centre carries numbers; every dot sits on the same grid. */
+  --stage:#0a0a0a;
+  --stage-lift:#171717;
+  --ink:#ffffff;
+  --ink2:#c4c4c0;
+  --line:#272727;
+  --ui:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--stage);color:var(--ink);font-family:var(--ui);-webkit-font-smoothing:antialiased}
+::selection{background:#3a1512;color:var(--ink)}
+body{display:grid;grid-template-columns:minmax(0,1fr) 300px;min-height:100%}
+@media (max-width:900px){body{grid-template-columns:1fr}}
+
+.stage{display:grid;place-items:center;padding:48px 24px;min-height:620px;background:radial-gradient(60% 55% at 50% 46%,var(--stage-lift) 0%,var(--stage) 72%)}
+.device{--scr:min(466px,80vw);position:relative;width:calc(var(--scr) + 30px);aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(from 200deg,#202020,#444 14%,#1d1d1d 30%,#161616 46%,#3a3a3a 62%,#1b1b1b 78%,#303030 92%,#202020);
+  box-shadow:0 50px 90px -30px rgba(0,0,0,.95),0 16px 28px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08);display:grid;place-items:center}
+.device::before{content:"";position:absolute;inset:3px;border-radius:50%;background:#030303}
+canvas{position:relative;width:var(--scr);height:var(--scr);border-radius:50%;display:block;touch-action:none;cursor:pointer}
+/* the CRT pass sits exactly on the display and lets every touch through to it */
+#crt{position:absolute;inset:0;margin:auto;pointer-events:none;display:none}
+.crt #crt{display:block}.crt #screen{opacity:0}
+canvas:focus-visible{outline:1px solid var(--ink2);outline-offset:6px}
+.real .device{--scr:44.45mm}
+/* the side button, at three o'clock: press = back, hold = the clock */
+.side{position:absolute;right:-8px;top:50%;width:10px;height:48px;transform:translateY(-50%);border:0;border-radius:5px;padding:0;cursor:pointer;z-index:2;
+  background:linear-gradient(90deg,#2a2a2a,#4a4a4a 60%,#2c2c2c);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 2px 4px rgba(0,0,0,.6)}
+.side:active{transform:translateY(-50%) translateX(-2px)}
+.side:focus-visible{outline:1px solid var(--ink2);outline-offset:3px}
+.device{transition:transform .06s ease-out}
+.hap{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink2)}
+.hap i{width:8px;height:8px;border-radius:50%;background:#2a2a2a;transition:background .25s,box-shadow .25s}
+.hap i.on{background:var(--ink);box-shadow:0 0 10px rgba(242,242,240,.6);transition:none}
+aside{border-left:1px solid #1b1b1b;padding:28px 22px 40px;display:flex;flex-direction:column;gap:24px;background:#0c0c0c}
+@media (max-width:900px){aside{border-left:0;border-top:1px solid #1b1b1b}}
+aside h1{margin:0;font:500 26px/1.1 var(--ui);letter-spacing:-.02em}
+.lede{margin:8px 0 0;font-size:13px;line-height:1.55;color:var(--ink2)}
+section{display:flex;flex-direction:column;gap:10px}
+section h2{margin:0;font-size:12px;font-weight:500;color:var(--ink2)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row.three{grid-template-columns:repeat(3,1fr)}
+button.b{font:500 13px/1 var(--ui);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:9px;height:40px;cursor:pointer;transition:background .15s,border-color .15s}
+button.b:hover{border-color:#444;background:#141414}
+button.b[aria-pressed="true"]{background:var(--ink);color:#0a0a0a;border-color:var(--ink)}
+button:focus-visible,input:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+.slider{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+input[type=range]{width:100%;accent-color:var(--ink);height:24px}
+output{font:500 18px/1 var(--ui);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+.note{margin:0;font-size:12px;line-height:1.55;color:#6d6d6a}
+.motion{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.pad,.dial{position:relative;aspect-ratio:1;border:1px solid var(--line);touch-action:none;cursor:grab}
+.pad{border-radius:14px;background:linear-gradient(var(--line),var(--line)) center/1px 100% no-repeat,linear-gradient(var(--line),var(--line)) center/100% 1px no-repeat}
+.pad i{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;left:50%;top:50%;background:var(--ink);box-shadow:0 0 0 4px rgba(242,242,240,.08)}
+.dial{border-radius:50%;background:radial-gradient(circle,#0c0c0c 58%,transparent 59%),repeating-conic-gradient(from 0deg,#1d1d1d 0 6deg,#2a2a2a 6deg 12deg)}
+.dial i{position:absolute;left:50%;top:5px;width:2px;height:14px;margin-left:-1px;background:var(--ink);border-radius:1px;transform-origin:1px calc(var(--r) - 5px)}
+.pad:focus-visible,.dial:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+.readout{margin:0;font-size:12px;color:var(--ink2);font-variant-numeric:tabular-nums}
+/* on a phone the display takes the whole width (on an iPhone that is already a bit bigger than the real 44.5 mm) */
+.stage{grid-auto-flow:row;gap:14px;align-content:center}
+/* on a desktop the device stays in view while the panel scrolls */
+@media (min-width:901px){.stage{position:sticky;top:0;align-self:start;height:100vh}}
+.gyro{font:600 13px/1 var(--ui);color:var(--ink);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:9px 16px;cursor:pointer}
+.gyro[aria-pressed="true"]{background:rgba(140,205,255,.18);border-color:rgba(140,205,255,.5)}
+@media (max-width:600px){.stage{padding:14px 6px;min-height:calc(min(466px,calc(100vw - 44px)) + 110px)}.stage .device{--scr:min(466px,calc(100vw - 44px));height:calc(var(--scr) + 30px)}}
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="device" id="device"><button class="side" id="side" aria-label="Tasto laterale: premi per tornare indietro, tieni premuto per il quadrante"></button><canvas id="screen" width="466" height="466" tabindex="0" aria-label="Display del Puck. Tocca per aprire, trascina in su e in giù nel menu, scorri a destra per tornare indietro."></canvas><canvas id="crt" aria-hidden="true"></canvas></div>
+  <button class="gyro" id="bGyro" aria-pressed="false">Usa il giroscopio</button>
+</main>
+<aside aria-label="Controlli">
+  <div>
+    <h1>Punti</h1>
+    <p class="lede">Una sola griglia di punti per tutto lo schermo. I numeri cambiano punto per punto, e si muove solo quello che cambia.</p>
+  </div>
+  <section>
+    <h2>Prima configurazione</h2>
+    <div class="row"><button class="b" id="suStart">Parti da capo</button><button class="b" id="suExit">Esci</button></div>
+    <div class="row three" id="suSteps"></div>
+    <p class="note" id="suHouse" style="color:var(--ink)" aria-live="polite"></p>
+    <div class="row three">
+      <button class="b" id="suPhone">Telefono: fatto</button>
+      <button class="b" id="suBridge">Pulsante del Bridge</button>
+      <button class="b" id="suFlip">Capovolgi</button>
+    </div>
+    <p class="note">Cosa va storto:</p>
+    <div class="row">
+      <button class="b" id="simWifi" aria-pressed="false">WiFi sbagliato</button>
+      <button class="b" id="simBridge" aria-pressed="false">Bridge spento</button>
+      <button class="b" id="simGovee" aria-pressed="false">Govee senza LAN</button>
+      <button class="b" id="simLamp" aria-pressed="false">Una lampada muta</button>
+      <button class="b" id="simSilent" aria-pressed="false">Niente in riproduzione</button>
+    </div>
+    <p class="note">Nel gioco delle stanze fai scorrere un dito lungo il bordo (o trascina su e giù) e tocca per scegliere. Scorri a destra per saltare un passo.</p>
+  </section>
+  <section>
+    <h2>La vita di Dotto</h2>
+    <p class="note" id="lifeOut" style="color:var(--ink)"></p>
+    <div class="row">
+      <button class="b" id="bHours">Avanti 3 ore</button>
+      <button class="b" id="bLow" aria-pressed="false">Batteria scarica</button>
+    </div>
+    <p class="note">Toccalo sul quadrante per fargli una carezza. La scena delle luci (Party, Focus) la cambi da Luci.</p>
+  </section>
+  <section>
+    <h2>Prova Dotto</h2>
+    <div class="row">
+      <button class="b" id="tMinute">Minuto</button>
+      <button class="b" id="tChase">Rincorsa</button>
+    </div>
+    <div class="row">
+      <button class="b" id="tCollapse">Crollo</button>
+      <button class="b" id="tPet">Carezza</button>
+    </div>
+    <div class="row">
+      <button class="b" id="tNight" aria-pressed="false">Notte</button>
+    </div>
+  </section>
+  <section>
+    <h2>Stati</h2>
+    <div class="row">
+      <button class="b" id="bCharge" aria-pressed="false">In carica</button>
+      <button class="b" id="bCrit" aria-pressed="false">Batteria critica</button>
+      <button class="b" id="bSync" aria-pressed="false">Senza ora</button>
+      <button class="b" id="bAod" aria-pressed="false">Schermo a riposo</button>
+      <button class="b" id="bMoved">Sposta Dotto</button>
+      <button class="b" id="bFlip">Capovolgi</button>
+      <button class="b" id="bTmMin">Timer: −1 min</button>
+      <button class="b" id="bTmEnd">Timer: alla fine</button>
+    </div>
+    <p class="note">"Sposta Dotto" fa finta che l'IMU l'abbia sentito spostare: la prossima volta Luci chiede la stanza. Con lo schermo a riposo tocca o "In mano" per svegliarlo.</p>
+  </section>
+  <section>
+    <h2>Movimento</h2>
+    <div class="motion">
+      <div class="pad" id="pad" role="slider" tabindex="0" aria-label="Inclinazione: trascina per inclinare il Puck, frecce per muoverlo, 0 per tornare in piano" aria-valuetext="piatto"><i id="padDot"></i></div>
+      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Rotazione: gira per ruotare il Puck come una ghiera"><i id="dialMark"></i></div>
+    </div>
+    <p class="readout" id="imuOut">Pitch 0° · roll 0° · yaw 0°</p>
+    <div class="row three">
+      <button class="b" id="bHand" aria-pressed="false">In mano</button>
+      <button class="b" id="bShake">Scuoti</button>
+      <button class="b" id="bShakeHard">Scuoti forte</button>
+    </div>
+    <div class="row">
+      <button class="b" id="bTiltL">Inclina ←</button>
+      <button class="b" id="bTiltR">Inclina →</button>
+    </div>
+    <p class="note">Inclinalo: Dotto scivola e si aggrappa ai bordi. Scuotilo forte e vola via. Sul display i valori si cambiano col dito lungo il bordo; la rotazione qui sopra resta solo come prova.</p>
+  </section>
+  <section>
+    <h2>La lotta: Dotto contro il secondo</h2>
+    <div class="row" id="sceneBtns"></div>
+    <p class="note">Ogni tanto parte da sola una scena. Il secondo scappa sempre.</p>
+  </section>
+  <section>
+    <h2>Feedback aptico</h2>
+    <div class="row">
+      <button class="b" id="bHap" aria-pressed="true">Tick sonori</button>
+      <div class="hap"><i id="hapDot"></i><span id="hapTxt">in attesa</span></div>
+    </div>
+    <p class="note">Nel browser è un click e un piccolo scatto della scocca. Sul Puck lo farà il motore LRA.</p>
+  </section>
+  <section>
+    <h2>Testi piccoli</h2>
+    <div class="row">
+      <button class="b" id="tMona" aria-pressed="true">Doto</button>
+      <button class="b" id="tDot" aria-pressed="false">Punti</button>
+    </div>
+  </section>
+  <section>
+    <h2>Come cambiano i numeri</h2>
+    <div class="row">
+      <button class="b" id="mFall" aria-pressed="true">Caduta</button>
+      <button class="b" id="mRoll" aria-pressed="false">Rullo</button>
+    </div>
+  </section>
+  <section>
+    <h2>Navigazione</h2>
+    <div class="row three">
+      <button class="b" id="bBack">Indietro</button>
+      <button class="b" id="bMenu">Menu</button>
+      <button class="b" id="bClock">Ora</button>
+    </div>
+    <div class="row">
+      <button class="b" id="bUp" aria-label="Voce precedente">Su</button>
+      <button class="b" id="bDown" aria-label="Voce successiva">Giù</button>
+    </div>
+  </section>
+  <section>
+    <h2>Prove</h2>
+    <div class="row">
+      <button class="b" id="bMin">Minuto dopo</button>
+      <button class="b" id="bPre">2 bar al drop</button>
+    </div>
+    <div class="row">
+      <button class="b" id="bCdj" aria-pressed="false">CDJ collegati</button>
+      <button class="b" id="bSilent" aria-pressed="false">Musica in silenzio</button>
+    </div>
+    <div class="slider"><input type="range" id="bpm" min="90" max="150" step="0.5" value="124" aria-label="BPM"><output id="bpmOut" for="bpm">124,0</output></div>
+  </section>
+  <section>
+    <h2>Vista</h2>
+    <div class="row"><button class="b" id="bReal" aria-pressed="false">Scala 1:1</button><button class="b" id="bSlow" aria-pressed="false">Rallenta</button></div>
+    <div class="row"><button class="b" id="bDepth" aria-pressed="true">Profondità 3D</button><button class="b" id="bCrt" aria-pressed="true">CRT</button></div>
+    <p class="note">La profondità segue l'inclinazione: prova il pad dell'IMU o "In mano".</p>
+    <p class="note">Nel menu apri Luci, Musica e DJ; Timer e Opzioni arrivano. Brani, copertine e numeri sono finti. In Musica: swipe a sinistra per il brano dopo, in giù per quello prima.</p>
+  </section>
+</aside>
+
+<script src="pip/engine.js"></script>
+<script src="pip/brains.js"></script>
+<script src="ui/depth.js"></script>
+<script src="ui/kit.js"></script>
+<script src="setup/qr.js"></script>
+<script src="setup/onboarding.js"></script>
+<script src="apps/music.js"></script>
+<script src="apps/timer.js"></script>
+<script src="apps/settings.js"></script>
+<script src="core/base.js"></script>
+<script src="core/type.js"></script>
+<script src="screens/face.js"></script>
+<script src="core/haptics.js"></script>
+<script src="core/render.js"></script>
+<script src="core/beat.js"></script>
+<script src="core/state.js"></script>
+<script src="core/snap.js"></script>
+<script src="pip/host.js"></script>
+<script src="core/wiring.js"></script>
+<script src="screens/home.js"></script>
+<script src="screens/menu.js"></script>
+<script src="apps/lights.js"></script>
+<script src="apps/dj.js"></script>
+<script src="device/input.js"></script>
+<script src="device/panel.js"></script>
+<script src="device/imu.js"></script>
+<script src="ui/crt.js"></script>
+<script src="main.js"></script>
+<!-- scenes: each file registers itself in window.PIP_SCENES -->
+<script src="scenes/dinamite.js"></script>
+</body>
+</html>
