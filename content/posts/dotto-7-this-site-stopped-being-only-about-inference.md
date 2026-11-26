@@ -43,6 +43,8 @@ The machine-readable outputs (per-page Markdown, `llms.txt`, the JSON manifest, 
 
 The site's black is `#0a0a0a`. The device's black, as part 9 explains, is `0,0,0` and nothing else. On a monitor the difference is invisible. On an AMOLED panel one is a pixel that is off and the other is a pixel that is glowing a little. The site borrowed the look, not the physics.
 
+*Update, 26 November, later the same night: the site's second redesign moved the ground to `#000`, so the inconsistency above is gone. The paragraph stays as it was written.*
+
 ## Still open
 
 The name. "Dotto" is a pun between *dot* and the Italian *dotto*, and the project notes say plainly that a trademark check is needed before any public release. It has not been done. The site was published on 24 November and the series is live, but the name is a working name until that check happens.

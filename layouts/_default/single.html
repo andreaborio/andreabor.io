@@ -1,14 +1,36 @@
 {{ define "main" }}
-  <article{{ if eq .Section "posts" }} itemscope itemtype="https://schema.org/BlogPosting"{{ end }}>
-    <header class="page-header">
-      <h1{{ if eq .Section "posts" }} itemprop="headline"{{ end }}>{{ .Title }}</h1>
+  {{ $series := slice }}{{ $idx := -1 }}
+  {{ with .Params.series }}
+    {{ $series = (where (where site.RegularPages "Section" "posts") "Params.series" .).ByDate }}
+    {{ range $i, $p := $series }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $idx = $i }}{{ end }}{{ end }}
+  {{ end }}
+  <article class="article"{{ if eq .Section "posts" }} itemscope itemtype="https://schema.org/BlogPosting"{{ end }}>
+    <header class="page-header article-header">
+      {{ if ge $idx 0 }}
+        <nav class="series-dots" aria-label="{{ .Params.series }}">
+          <span class="series-name">{{ .Params.series }}</span>
+          <ol>
+            {{ range $i, $p := $series }}
+              <li{{ if eq $i $idx }} class="on"{{ else if lt $i $idx }} class="read"{{ end }}><a href="{{ $p.RelPermalink }}" title="{{ $p.Title }}"{{ if eq $i $idx }} aria-current="page"{{ end }}><span class="sr">Part {{ add $i 1 }}</span></a></li>
+            {{ end }}
+          </ol>
+          <span class="series-count fx">{{ add $idx 1 | printf "%02d" }}/{{ len $series | printf "%02d" }}</span>
+        </nav>
+      {{ end }}
+      <h1 class="fx"{{ if eq .Section "posts" }} itemprop="headline"{{ end }}>{{ .Title }}</h1>
+      {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
       {{ if not .Date.IsZero }}
         {{ if eq .Section "posts" }}<meta itemprop="datePublished" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
-        <p class="post-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>{{ with .Params.source_url }} · <a href="{{ . }}">Originally published on Substack</a>{{ end }}</p>
+        <p class="post-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time><span>{{ .ReadingTime }} min read</span>{{ with .Params.source_url }}<a href="{{ . }}">Originally on Substack</a>{{ end }}</p>
       {{ end }}
-      {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
     </header>
     <div class="prose"{{ if eq .Section "posts" }} itemprop="articleBody"{{ end }}>{{ .Content }}</div>
     {{ if eq .Section "posts" }}<meta itemprop="author" content="Andrea Borio">{{ end }}
+    {{ if ge $idx 0 }}
+      <nav class="series-pager" aria-label="Series navigation">
+        {{ if gt $idx 0 }}{{ with index $series (sub $idx 1) }}<a class="prev" href="{{ .RelPermalink }}"><span>← Previous</span><b>{{ .Title }}</b></a>{{ end }}{{ else }}<span></span>{{ end }}
+        {{ if lt (add $idx 1) (len $series) }}{{ with index $series (add $idx 1) }}<a class="next" href="{{ .RelPermalink }}"><span>Next →</span><b>{{ .Title }}</b></a>{{ end }}{{ end }}
+      </nav>
+    {{ end }}
   </article>
 {{ end }}

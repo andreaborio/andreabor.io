@@ -1,7 +1,7 @@
 {{ define "main" }}
   <article class="lost">
     <div class="lost-dotto" aria-hidden="true">{{ partial "dotto.html" (dict "mode" "dizzy" "size" 96) }}</div>
-    <h1 class="fx">Nothing here.</h1>
+    <h1 class="fx">Nothing here<span class="cursor" aria-hidden="true"></span></h1>
     <p>Either the URL changed or I removed something I could no longer defend.</p>
     <p><a href="{{ "/" | relURL }}">Back to the index</a></p>
   </article>

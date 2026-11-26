@@ -1,67 +1,82 @@
 {{ define "main" }}
-  {{ $latest := index (first 1 (where .Site.RegularPages "Section" "posts")) 0 }}
+  {{ $posts := where .Site.RegularPages "Section" "posts" }}
+  {{ $agents := where .Site.RegularPages "Section" "agents" }}
+  {{ $dotto := where $posts "Params.series" "Dotto making-of" }}
+  {{ $latest := index (first 1 $posts) 0 }}
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-text">
-      <h1 id="hero-title" class="fx">I play with LLMs.</h1>
+      <h1 id="hero-title" class="hero-title fx">I play with LLMs<span class="cursor" aria-hidden="true"></span></h1>
       <p class="hero-lede">This is where I keep my longest-running experiments built with AI models. I set the requirements and the specs, and sometimes the technique. The models write the code and most of the posts. The record is kept so I can look back and see how the work changes from one model to the next.</p>
-      <p class="hero-links">
-        <a href="{{ "/posts/" | relURL }}">Posts</a>
-        <a href="{{ "/agents/" | relURL }}">Agents</a>
-        <a href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">Dotto series</a>
-        <a href="{{ "/dotto/play/" | relURL }}">Live Dotto</a>
-      </p>
+      <dl class="hero-stats">
+        <div><dt>Posts</dt><dd class="fx">{{ len $posts }}</dd></div>
+        <div><dt>Decision records</dt><dd class="fx">{{ len $agents }}</dd></div>
+        <div><dt>Since</dt><dd class="fx">{{ (index (first 1 $posts.ByDate) 0).Date.Format "2006" }}</dd></div>
+      </dl>
     </div>
     <a class="puck" href="{{ $latest.RelPermalink }}" aria-label="Latest post: {{ $latest.Title }}">
       <span class="puck-bezel">
         <span class="puck-glass">
+          <span class="puck-ticks" aria-hidden="true"></span>
           <span class="puck-body">
+            <span class="puck-kicker">Latest</span>
             <span class="puck-title fx">{{ $latest.Title }}</span>
-            <time class="puck-date fx" datetime="{{ $latest.Date.Format "2006-01-02" }}">{{ $latest.Date.Format "2 Jan 2006" }}</time>
+            <time class="puck-date fx" datetime="{{ $latest.Date.Format "2006-01-02" }}">{{ $latest.Date.Format "02.01.06" }}</time>
           </span>
-          <span class="puck-orbit" aria-hidden="true"><span class="puck-dotto">{{ partial "dotto.html" (dict "mode" "walk" "size" 34) }}</span></span>
+          <span class="puck-orbit" aria-hidden="true"><span class="puck-dotto">{{ partial "dotto.html" (dict "mode" "walk" "size" 30) }}</span></span>
+          <span class="puck-glare" aria-hidden="true"></span>
         </span>
       </span>
     </a>
   </section>
 
-  {{ $featured := where (where .Site.RegularPages "Section" "agents") "Params.featured" true }}
-  <section class="home-agent-notes" aria-labelledby="architecture-notes">
-    <div class="section-heading">
-      <h2 id="architecture-notes">Inference architecture</h2>
-      <a href="{{ "/agents/" | relURL }}">All field notes</a>
+  <section class="projects" aria-labelledby="projects">
+    <div class="section-heading"><h2 id="projects" class="fx">Long-running experiments</h2></div>
+    <div class="project-grid">
+      <a class="project project-dotto" href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">
+        <span class="project-glass"><img src="{{ "img/dotto/fw-lights-room.jpg" | relURL }}" alt="" loading="lazy" decoding="async" width="466" height="466"></span>
+        <span class="project-text">
+          <span class="project-name fx">Dotto</span>
+          <span class="project-desc">A round desk object with a dot-matrix display and a character inside. ESP32-S3, our own renderer, firmware written with Claude.</span>
+          <span class="project-meta">{{ len $dotto }} parts · making-of</span>
+        </span>
+      </a>
+      <a class="project project-hebrus" href="{{ "/agents/" | relURL }}">
+        <span class="project-matrix" aria-hidden="true"></span>
+        <span class="project-text">
+          <span class="project-name fx">Hebrus</span>
+          <span class="project-desc">Metal-first LLM inference for Apple Silicon, with adaptive SSD streaming. Decisions recorded for agents to resume from.</span>
+          <span class="project-meta">{{ len $agents }} decision records</span>
+        </span>
+      </a>
     </div>
-    <p class="home-agent-deck">Sparse attention, transactional state, fail-closed admission, and storage at checkpoint scale—short decision records with evidence and explicit limits.</p>
-    <ol class="home-agent-list">
-      {{ range first 4 $featured.ByDate.Reverse }}
-        <li>
-          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-          <span>{{ .Params.architecture_area }} · {{ .Params.note_id }}</span>
-        </li>
-      {{ end }}
-    </ol>
-  </section>
-
-  <section class="building" aria-labelledby="building">
-    <div class="section-heading"><h2 id="building">What I build</h2></div>
-    <ul class="project-list">
-      <li><a href="https://github.com/andreaborio/hebrus">Hebrus</a><span>Metal-first inference for Apple Silicon, with adaptive SSD streaming.</span></li>
-      <li><a href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">Dotto</a><span>A round desk object with a dot-matrix display and a character inside. <a href="{{ "/dotto/play/" | relURL }}">Try the prototype</a>.</span></li>
-      <li><a href="https://github.com/andreaborio/forgequant">forgequant</a><span>Making quantization experiments cheaper.</span></li>
-      <li><a href="https://github.com/andreaborio/benchy">benchy</a><span>And an experimental <a href="https://github.com/andreaborio/ds4">ds4 fork</a>.</span></li>
+    <ul class="project-minor">
+      <li><a href="https://github.com/andreaborio/forgequant">forgequant</a><span>Cheaper quantization experiments.</span></li>
+      <li><a href="https://github.com/andreaborio/benchy">benchy</a><span>Benchmarks, and an experimental <a href="https://github.com/andreaborio/ds4">ds4 fork</a>.</span></li>
+      <li><a href="{{ "/dotto/play/" | relURL }}">Dotto prototype</a><span>The frozen browser version, live.</span></li>
     </ul>
   </section>
 
   <section aria-labelledby="recent-posts">
     <div class="section-heading">
-      <h2 id="recent-posts">Recent posts</h2>
-      <a href="{{ "/posts/" | relURL }}">All posts</a>
+      <h2 id="recent-posts" class="fx">Recent</h2>
+      <a href="{{ "/posts/" | relURL }}">All posts →</a>
     </div>
-    <ol class="post-list">
-      {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
+    {{ partial "post-list.html" (first 6 $posts) }}
+  </section>
+
+  {{ $featured := where $agents "Params.featured" true }}
+  <section class="home-agent-notes" aria-labelledby="architecture-notes">
+    <div class="section-heading">
+      <h2 id="architecture-notes" class="fx">Inference architecture</h2>
+      <a href="{{ "/agents/" | relURL }}">All field notes →</a>
+    </div>
+    <p class="home-agent-deck">Sparse attention, transactional state, fail-closed admission, and storage at checkpoint scale: short decision records with evidence and explicit limits.</p>
+    <ol class="home-agent-list">
+      {{ range first 4 $featured.ByDate.Reverse }}
         <li>
+          <span class="note-id">{{ .Params.note_id }}</span>
           <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time>
-          {{ with .Description }}<p>{{ . }}</p>{{ end }}
+          <span class="note-area">{{ .Params.architecture_area }}</span>
         </li>
       {{ end }}
     </ol>

@@ -2,7 +2,7 @@
 name: andreabor.io
 description: Black glass, a dot grid and Doto dot-matrix display type; a plain system-sans reading column; Dotto the pixel mascot lives in the chrome.
 colors:
-  black-glass: "#0a0a0a"
+  black-glass: "#000000"
   code-well: "#151515"
   hairline: "#2a2a2a"
   warm-ink: "#f2f2f0"

@@ -1,0 +1,12 @@
+<ol class="post-list">
+  {{ range . }}
+    <li>
+      <time class="fx" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02.01.06" }}</time>
+      <div class="post-row">
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{ with .Description }}<p>{{ . }}</p>{{ end }}
+      </div>
+      {{ with .Params.series }}<span class="tag">{{ replace . " making-of" "" }}</span>{{ end }}
+    </li>
+  {{ end }}
+</ol>

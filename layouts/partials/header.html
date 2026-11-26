@@ -1,6 +1,9 @@
 <header class="site-header">
   <div class="site-bar">
-    <a class="site-name fx" href="{{ "/" | relURL }}">Andrea Borio</a>
+    <a class="brand" href="{{ "/" | relURL }}" aria-label="Andrea Borio, home">
+      <span class="brand-puck" aria-hidden="true">{{ partial "dotto.html" (dict "mode" "idle" "size" 18) }}</span>
+      <span class="brand-name fx">Andrea Borio</span>
+    </a>
     <nav aria-label="Main navigation">
       <a href="{{ "/posts/" | relURL }}"{{ if eq .Section "posts" }} aria-current="page"{{ end }}>Posts</a>
       <a href="{{ "/agents/" | relURL }}"{{ if eq .Section "agents" }} aria-current="page"{{ end }}>Agents</a>
@@ -8,5 +11,5 @@
       <a href="{{ "/now/" | relURL }}"{{ if eq .RelPermalink "/now/" }} aria-current="page"{{ end }}>Now</a>
     </nav>
   </div>
-  <div class="rail" aria-hidden="true"><span class="walker">{{ partial "dotto.html" (dict "mode" "walk" "size" 22) }}</span></div>
+  <div class="rail" aria-hidden="true"><span class="walker">{{ partial "dotto.html" (dict "mode" "walk" "size" 18) }}</span></div>
 </header>
