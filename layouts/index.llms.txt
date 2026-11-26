@@ -1,6 +1,6 @@
 # Andrea Borio
 
-> Andrea Borio is a software developer working on local LLM inference for Apple Silicon, with a focus on quantization, Metal, mixture-of-experts models, and SSD streaming.
+> Andrea Borio's dated record of long-running experiments built with AI models: local LLM inference for Apple Silicon (quantization, Metal, mixture-of-experts models, SSD streaming) and Dotto, a round dot-matrix desk object. Andrea steers the projects (requirements, specifications, sometimes the implementation technique); the models write the code and most of the posts. The record is kept to compare code and reasoning quality model by model over time.
 
 This is Andrea's canonical personal site. Technical claims are reported with their measured setup and caveats. Imported articles retain their original Substack publication date and link back to the source. Clean Markdown versions are provided for every page.
 

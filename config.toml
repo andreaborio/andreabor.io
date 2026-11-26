@@ -7,7 +7,7 @@ disableKinds = ["taxonomy", "term"]
 summaryLength = 28
 
 [params]
-  description = "Andrea Borio writes about local LLM inference, quantization, Apple Silicon, and running models that do not fit comfortably in memory."
+  description = "A dated record of Andrea Borio's longest-running experiments built with AI models, kept so that code and reasoning can be compared model by model over time."
 
   [params.hebrus]
     name = "Hebrus"
