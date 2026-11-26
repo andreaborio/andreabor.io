@@ -25,7 +25,7 @@ Production build:
 hugo --minify
 ```
 
-The output is written to `public/`. The site has no JavaScript, trackers, external fonts, or runtime dependencies.
+The output is written to `public/`. The site has no external fonts or runtime dependencies. The only scripts are Vercel Web Analytics (cookie-free, production builds only, `/_vercel/insights/script.js`) and the `/dotto/play/` demo.
 
 Production publishing uses the existing Vercel project linked inside the local
 generated `public/` directory:

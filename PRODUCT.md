@@ -20,7 +20,7 @@ Hugo static site deployed to Vercel from the generated `public/` directory. Cont
 
 ## Capabilities and Constraints
 - Sections: Posts, Agents (Hebrus field notes), About, Now, plus the Dotto series and `/dotto/play/` demo.
-- No trackers. No external fonts: the typeface Doto (OFL, from Google Fonts) is downloaded and served from the site (confirmed by the user).
+- Analytics: Vercel Web Analytics only (cookie-free, added 26 Nov 2026 at the owner's request). No other trackers. No external fonts: the typeface Doto (OFL, from Google Fonts) is downloaded and served from the site (confirmed by the user).
 - JavaScript: the site has been no-JS. The first redesign pass is CSS-only; a small canvas for animation is an open, later decision. `/dotto/play/` already requires JS and loads Geist and Doto from Google Fonts; it is the one sanctioned exception.
 - Body text of articles must stay clean and readable: the Agents notes contain dense tables and code.
 - Open decision: which projects besides Hebrus and Dotto are linked prominently (forgequant, benchy, ds4 fork, abliterate, Velo and others exist).
@@ -38,7 +38,7 @@ Dotto (the pixel character that lives on the round dot-matrix display) is the ma
 1. Evidence before decoration: nothing on the page may make a measurement harder to read or a caveat easier to miss.
 2. The character carries personality, the text carries truth: Dotto animates the chrome, never the argument.
 3. Machine-readable parity: every visual change must leave the Markdown, `llms` and JSON outputs intact.
-4. Small and fast: static, no trackers, no runtime dependencies beyond what a page needs.
+4. Small and fast: static, no trackers beyond Vercel Web Analytics, no runtime dependencies beyond what a page needs.
 
 ## Accessibility & Inclusion
 Keep the current commitments: skip link, visible keyboard focus, semantic navigation, readable at narrow widths, long code lines scroll instead of breaking the layout. Respect `prefers-reduced-motion` for every animation, and keep body and functional text at a comfortable size (no functional text under 11px).
