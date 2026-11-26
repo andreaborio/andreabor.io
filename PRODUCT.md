@@ -21,7 +21,7 @@ Hugo static site deployed to Vercel from the generated `public/` directory. Cont
 ## Capabilities and Constraints
 - Sections: Posts, Agents (Hebrus field notes), About, Now, plus the Dotto series and `/dotto/play/` demo.
 - Analytics: Vercel Web Analytics only (cookie-free, added 26 Nov 2026 at the owner's request). No other trackers. No external fonts: the typeface Doto (OFL, from Google Fonts) is downloaded and served from the site (confirmed by the user).
-- JavaScript: the site has been no-JS. The first redesign pass is CSS-only; a small canvas for animation is an open, later decision. `/dotto/play/` already requires JS and loads Geist and Doto from Google Fonts; it is the one sanctioned exception.
+- JavaScript: decided 26 Nov 2026 at the owner's request: one small progressive-enhancement file, `static/js/dotto.js` (puck as a live dot-matrix display, Dotto on the rail following pointer and reading progress, pointer-lit dot grid, reveals, card tilt). Without JS the site is complete; under `prefers-reduced-motion` everything is still. `/dotto/play/` already requires JS and loads Geist and Doto from Google Fonts; it is the one sanctioned exception.
 - Body text of articles must stay clean and readable: the Agents notes contain dense tables and code.
 - Open decision: which projects besides Hebrus and Dotto are linked prominently (forgequant, benchy, ds4 fork, abliterate, Velo and others exist).
 - Open decision: a trademark check for the name "Dotto" before any public release; not done.

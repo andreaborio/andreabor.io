@@ -20,7 +20,7 @@
           <span class="puck-body">
             <span class="puck-kicker">Latest</span>
             <span class="puck-title fx">{{ $latest.Title }}</span>
-            <time class="puck-date fx" datetime="{{ $latest.Date.Format "2006-01-02" }}">{{ $latest.Date.Format "02.01.06" }}</time>
+            <time class="puck-date fx" datetime="{{ $latest.Date.Format "2006-01-02" }}">{{ $latest.Date.Format "2 Jan 2006" }}</time>
           </span>
           <span class="puck-orbit" aria-hidden="true"><span class="puck-dotto">{{ partial "dotto.html" (dict "mode" "walk" "size" 30) }}</span></span>
           <span class="puck-glare" aria-hidden="true"></span>
@@ -33,7 +33,7 @@
     <div class="section-heading"><h2 id="projects" class="fx">Long-running experiments</h2></div>
     <div class="project-grid">
       <a class="project project-dotto" href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">
-        <span class="project-glass"><img src="{{ "img/dotto/fw-lights-room.jpg" | relURL }}" alt="" loading="lazy" decoding="async" width="466" height="466"></span>
+        <span class="project-glass"><span class="reel">{{ range slice "fw-lights-room" "fw-dj" "fw-timer-egg" "fw-clock-cdj" }}<img src="{{ printf "img/dotto/%s.jpg" . | relURL }}" alt="" loading="lazy" decoding="async" width="466" height="466">{{ end }}</span></span>
         <span class="project-text">
           <span class="project-name fx">Dotto</span>
           <span class="project-desc">A round desk object with a dot-matrix display and a character inside. ESP32-S3, our own renderer, firmware written with Claude.</span>
