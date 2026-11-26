@@ -81,6 +81,8 @@
   </div>
     <script id="dotto-data" type="application/json">{{ hugo.Data.dotto | jsonify | safeJS }}</script>
     <script defer src="{{ "js/dotto.js" | relURL }}"></script>
+    <script defer src="{{ "js/pip-engine.js" | relURL }}"></script>
+    <script defer src="{{ "js/dotto-world.js" | relURL }}"></script>
     {{- if hugo.IsProduction }}
     <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}</script>
     <script defer src="/_vercel/insights/script.js"></script>

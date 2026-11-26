@@ -13,39 +13,48 @@
         <div><dt>Since</dt><dd class="fx">{{ (index (first 1 $posts.ByDate) 0).Date.Format "2006" }}</dd></div>
       </dl>
     </div>
-    <a class="puck" href="{{ $latest.RelPermalink }}" aria-label="Latest post: {{ $latest.Title }}">
-      <span class="puck-bezel">
-        <span class="puck-glass">
-          <span class="puck-ticks" aria-hidden="true"></span>
-          <span class="puck-body">
-            <span class="puck-kicker">Latest</span>
-            <span class="puck-title fx">{{ $latest.Title }}</span>
-            <time class="puck-date fx" datetime="{{ $latest.Date.Format "2006-01-02" }}">{{ $latest.Date.Format "2 Jan 2006" }}</time>
-          </span>
-          <span class="puck-orbit" aria-hidden="true"><span class="puck-dotto">{{ partial "dotto.html" (dict "mode" "walk" "size" 30) }}</span></span>
-          <span class="puck-glare" aria-hidden="true"></span>
-        </span>
-      </span>
-    </a>
+    <div class="stage">
+      <div class="stage-sky" aria-hidden="true">
+        <span class="sky-orb"></span><span class="sky-cloud"></span><span class="sky-cloud c2"></span>
+        {{ range seq 9 }}<span class="sky-star" style="--i:{{ . }};top:{{ add 6 (mod (mul . 37) 46) }}%"></span>{{ end }}
+      </div>
+      <a class="sign" data-floor href="{{ $latest.RelPermalink }}" aria-label="Latest post: {{ $latest.Title }}">
+        <span class="sign-label fx">New</span>
+        <span class="sign-window"><span class="sign-track fx"><span>{{ $latest.Title }}</span><span aria-hidden="true">{{ $latest.Title }}</span></span></span>
+      </a>
+      <span class="plat plat-top" data-floor aria-hidden="true"></span>
+      <span class="plat plat-mid" data-floor aria-hidden="true"></span>
+      <span class="plat plat-low" data-floor aria-hidden="true"></span>
+      <span class="stage-nojs nojs-dotto" aria-hidden="true">{{ partial "dotto.html" (dict "mode" "idle" "size" 46) }}</span>
+      <p class="stage-hint">This is Dotto. Click anywhere, drag him, or leave him alone for a while.</p>
+    </div>
   </section>
 
   <section class="projects" aria-labelledby="projects">
     <div class="section-heading"><h2 id="projects" class="fx">Long-running experiments</h2></div>
     <div class="project-grid">
       <a class="project project-dotto" href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">
-        <span class="project-glass"><span class="reel">{{ range slice "fw-lights-room" "fw-dj" "fw-timer-egg" "fw-clock-cdj" }}<img src="{{ printf "img/dotto/%s.jpg" . | relURL }}" alt="" loading="lazy" decoding="async" width="466" height="466">{{ end }}</span></span>
+        <span class="project-art" aria-hidden="true">
+          <span class="art-ring"></span>
+          <span class="reel">{{ range slice "fw-lights-room" "fw-dj" "fw-timer-egg" "fw-clock-cdj" }}<img src="{{ printf "img/dotto/%s.jpg" . | relURL }}" alt="" loading="lazy" decoding="async" width="466" height="466">{{ end }}</span>
+        </span>
         <span class="project-text">
+          <span class="project-kicker">{{ len $dotto }} parts · making-of</span>
           <span class="project-name fx">Dotto</span>
-          <span class="project-desc">A round desk object with a dot-matrix display and a character inside. ESP32-S3, our own renderer, firmware written with Claude.</span>
-          <span class="project-meta">{{ len $dotto }} parts · making-of</span>
+          <span class="project-desc">A round desk object with a dot-matrix display and the little guy who runs around this page. ESP32-S3, our own renderer, firmware written with Claude.</span>
+          <span class="project-go">Read the series →</span>
         </span>
       </a>
       <a class="project project-hebrus" href="{{ "/agents/" | relURL }}">
-        <span class="project-matrix" aria-hidden="true"></span>
+        <span class="project-art" aria-hidden="true">
+          <span class="art-ring"></span>
+          <span class="attn">{{ range seq 64 }}<i style="--i:{{ . }}"></i>{{ end }}</span>
+        </span>
         <span class="project-text">
+          <span class="project-kicker">{{ len $agents }} decision records</span>
           <span class="project-name fx">Hebrus</span>
-          <span class="project-desc">Metal-first LLM inference for Apple Silicon, with adaptive SSD streaming. Decisions recorded for agents to resume from.</span>
-          <span class="project-meta">{{ len $agents }} decision records</span>
+          <span class="project-desc">Metal-first LLM inference for Apple Silicon, with adaptive SSD streaming. Every decision is written down for the next agent.</span>
+          <span class="project-go">Open the field notes →</span>
         </span>
       </a>
     </div>
