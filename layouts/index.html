@@ -4,29 +4,18 @@
   {{ $dotto := where $posts "Params.series" "Dotto making-of" }}
   {{ $latest := index (first 1 $posts) 0 }}
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-text">
-      <h1 id="hero-title" class="hero-title fx">I play with LLMs<span class="cursor" aria-hidden="true"></span></h1>
+    <h1 id="hero-title" class="hero-title fx">I play with LLMs<span class="cursor" aria-hidden="true"></span></h1>
+    <div class="hero-side">
       <p class="hero-lede">This is where I keep my longest-running experiments built with AI models. I set the requirements and the specs, and sometimes the technique. The models write the code and most of the posts. The record is kept so I can look back and see how the work changes from one model to the next.</p>
+      <a class="sign" href="{{ $latest.RelPermalink }}" aria-label="Latest post: {{ $latest.Title }}">
+        <span class="sign-label fx">New</span>
+        <span class="sign-window"><span class="sign-track fx"><span>{{ $latest.Title }}</span><span aria-hidden="true">{{ $latest.Title }}</span></span></span>
+      </a>
       <dl class="hero-stats">
         <div><dt>Posts</dt><dd class="fx">{{ len $posts }}</dd></div>
         <div><dt>Decision records</dt><dd class="fx">{{ len $agents }}</dd></div>
         <div><dt>Since</dt><dd class="fx">{{ (index (first 1 $posts.ByDate) 0).Date.Format "2006" }}</dd></div>
       </dl>
-    </div>
-    <div class="stage">
-      <div class="stage-sky" aria-hidden="true">
-        <span class="sky-orb"></span><span class="sky-cloud"></span><span class="sky-cloud c2"></span>
-        {{ range seq 9 }}<span class="sky-star" style="--i:{{ . }};top:{{ add 6 (mod (mul . 37) 46) }}%"></span>{{ end }}
-      </div>
-      <a class="sign" data-floor href="{{ $latest.RelPermalink }}" aria-label="Latest post: {{ $latest.Title }}">
-        <span class="sign-label fx">New</span>
-        <span class="sign-window"><span class="sign-track fx"><span>{{ $latest.Title }}</span><span aria-hidden="true">{{ $latest.Title }}</span></span></span>
-      </a>
-      <span class="plat plat-top" data-floor aria-hidden="true"></span>
-      <span class="plat plat-mid" data-floor aria-hidden="true"></span>
-      <span class="plat plat-low" data-floor aria-hidden="true"></span>
-      <span class="stage-nojs nojs-dotto" aria-hidden="true">{{ partial "dotto.html" (dict "mode" "idle" "size" 46) }}</span>
-      <p class="stage-hint">This is Dotto. Click anywhere, drag him, or leave him alone for a while.</p>
     </div>
   </section>
 
