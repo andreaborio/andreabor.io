@@ -1,0 +1,10 @@
+{{- /* A dot-matrix mark: rows of "#" (lit), "+" (lit, travels: the streaming packet), "." (unlit grid dot). size in px. */ -}}
+{{- $rows := .rows -}}{{- $w := len (index $rows 0) -}}{{- $h := len $rows -}}{{- $k := 0 -}}
+<svg class="dotmark {{ .class }}" viewBox="0 0 {{ $w }} {{ $h }}" width="{{ .size }}" height="{{ mul .size (div (float $h) $w) }}" aria-hidden="true" focusable="false">
+  {{- range $y, $row := $rows }}{{ range $x, $c := split $row "" }}
+    {{- if eq $c "#" }}<circle cx="{{ add $x 0.5 }}" cy="{{ add $y 0.5 }}" r="0.4" class="on"/>
+    {{- else if eq $c "+" }}<circle cx="{{ add $x 0.5 }}" cy="{{ add $y 0.5 }}" r="0.4" class="on run" style="--i:{{ $x }}"/>
+    {{- else if eq $c "o" }}<circle cx="{{ add $x 0.5 }}" cy="{{ add $y 0.5 }}" r="0.3" class="dim"/>
+    {{- else }}<circle cx="{{ add $x 0.5 }}" cy="{{ add $y 0.5 }}" r="0.16" class="off"/>{{ end }}
+  {{- end }}{{ end }}
+</svg>

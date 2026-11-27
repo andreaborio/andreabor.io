@@ -21,32 +21,26 @@
 
   <section class="projects" aria-labelledby="projects">
     <div class="section-heading"><h2 id="projects" class="fx">Long-running experiments</h2></div>
-    <div class="project-grid">
-      <a class="project project-dotto" href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">
-        <span class="project-art" aria-hidden="true">
-          <span class="art-ring"></span>
-          <span class="reel">{{ range slice "fw-lights-room" "fw-dj" "fw-timer-egg" "fw-clock-cdj" }}<img src="{{ printf "img/dotto/%s.jpg" . | relURL }}" alt="" loading="lazy" decoding="async" width="466" height="466">{{ end }}</span>
-        </span>
-        <span class="project-text">
-          <span class="project-kicker">{{ len $dotto }} parts · making-of</span>
-          <span class="project-name fx">Dotto</span>
-          <span class="project-desc">A round desk object with a dot-matrix display and the little guy who runs around this page. ESP32-S3, our own renderer, firmware written with Claude.</span>
-          <span class="project-go">Read the series →</span>
-        </span>
-      </a>
-      <a class="project project-hebrus" href="{{ "/agents/" | relURL }}">
-        <span class="project-art" aria-hidden="true">
-          <span class="art-ring"></span>
-          <span class="attn">{{ range seq 64 }}<i style="--i:{{ . }}"></i>{{ end }}</span>
-        </span>
-        <span class="project-text">
-          <span class="project-kicker">{{ len $agents }} decision records</span>
-          <span class="project-name fx">Hebrus</span>
-          <span class="project-desc">Metal-first LLM inference for Apple Silicon, with adaptive SSD streaming. Every decision is written down for the next agent.</span>
-          <span class="project-go">Open the field notes →</span>
-        </span>
-      </a>
-    </div>
+    {{ $hebrusSince := (index (first 1 $agents.ByDate) 0).Date }}
+    {{ $dottoSince := (index (first 1 $dotto.ByDate) 0).Date }}
+    <ol class="exp-list">
+      <li class="exp exp-dotto">
+        <a href="{{ "/posts/dotto-1-the-first-screen-was-a-no/" | relURL }}">
+          <span class="exp-mark">{{ partial "dotto.html" (dict "mode" "idle" "size" 54) }}</span>
+          <span class="exp-name fx">Dotto</span>
+          <span class="exp-desc">A round desk object with a dot-matrix display, and the character who lives in it and on this site. ESP32-S3, its own renderer.</span>
+          <span class="exp-meta"><b>{{ len $dotto }}</b> parts<i> · </i>since {{ $dottoSince.Format "Jan 2006" }}</span>
+        </a>
+      </li>
+      <li class="exp exp-hebrus">
+        <a href="{{ "/agents/" | relURL }}">
+          <span class="exp-mark">{{ partial "dotmark.html" (dict "size" 58 "class" "hebrus-mark" "rows" (slice "....ooooo...." "...ooooooo..." "..o#ooooo#o.." ".oo#ooooo#oo." "ooo#ooooo#ooo" "ooo#ooooo#ooo" "ooo#+++++#ooo" "ooo#ooooo#ooo" "ooo#ooooo#ooo" ".oo#ooooo#oo." "..o#ooooo#o.." "...ooooooo..." "....ooooo....")) }}</span>
+          <span class="exp-name fx">Hebrus</span>
+          <span class="exp-desc">Metal-first LLM inference for Apple Silicon. Weights stream from the SSD when the model does not fit. Every decision is written down for the next agent.</span>
+          <span class="exp-meta"><b>{{ len $agents }}</b> decision records<i> · </i>since {{ $hebrusSince.Format "Jan 2006" }}</span>
+        </a>
+      </li>
+    </ol>
     <ul class="project-minor">
       <li><a href="https://github.com/andreaborio/forgequant">forgequant</a><span>Cheaper quantization experiments.</span></li>
       <li><a href="https://github.com/andreaborio/benchy">benchy</a><span>Benchmarks, and an experimental <a href="https://github.com/andreaborio/ds4">ds4 fork</a>.</span></li>

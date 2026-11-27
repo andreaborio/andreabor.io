@@ -69,7 +69,7 @@
 
   /* ---------- floors ---------- */
   // only blocks with free space above them: he never stands on top of text you are reading
-  const SEL = '.hero-title, .section-heading, .project, .article-header h1, .page-header h1, .prose h2, .prose figure img, .series-pager a, .agent-hero, .agent-note-header h1';
+  const SEL = '.hero-title, .section-heading, .article-header h1, .page-header h1, .prose h2, .prose figure img, .series-pager a, .agent-hero, .agent-note-header h1';
   const ids = new WeakMap(); let nid = 0, els = [], elsT = -1e9;
   const railEl = document.querySelector('.rail');
   let topLimit = 70, floors = [], rail = null;
