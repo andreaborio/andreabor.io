@@ -81,7 +81,8 @@
       // the layout box without our tilt: centre from the rect (rotation keeps it), size from the layout
       const r = el.getBoundingClientRect(), w = el.offsetWidth || r.width, h = el.offsetHeight || r.height;
       const cx = r.left + r.width / 2, cy = r.top + r.height / 2, top = cy - h / 2;
-      if (w < 60 || top < topLimit || top > VH - 30) continue;
+      const mine = P.surf && P.surf.el === el;
+      if (w < 60 || (!mine && (top < topLimit || top > VH - 30)) || top < -300 || top > VH + 300) continue;
       let id = ids.get(el); if (!id){ id = 'f' + (++nid); ids.set(el, id); }
       const t = tilt.get(el), a = t ? t.a * Math.PI / 180 : 0;
       const x = cx + Math.sin(a) * h / 2, y = cy - Math.cos(a) * h / 2;
@@ -174,7 +175,8 @@
     const t = now_(), v = Math.abs(scrollY - lastSY) / Math.max(1, t - lastST) * 1000;
     lastSY = scrollY; lastST = t; lastInput = t;
     if (sleeping && v > 1500) wake('whoa, where are we going');
-    if (t - shakeT > 3500 && P.surf && !P.surf.rail && v > 3500){ shakeT = t; W.shake(v > 7000 ? 1 : 0.5); if (v > 7000) say(pick(['whoa!', 'slow down!'])); }
+    if (P.surf && !P.surf.rail && P.ready() && !drag && v > 250){ home(); if (Math.random() < 0.3) say(pick(['hup', 'oh, we\'re moving', 'wait for me']), 1000); }
+    else if (!touch && t - shakeT > 3500 && P.surf && !P.surf.rail && v > 7000){ shakeT = t; W.shake(1); say(pick(['whoa!', 'slow down!'])); }
   }, { passive: true });
   let motionAsked = false;
   const onMotion = e => {
@@ -225,7 +227,7 @@
   function brain(now){
     // lost below or beside the screen: he comes back from the top, onto the rail
     if (P.y > VH + 120 || P.x < -140 || P.x > VW + 140 || P.y < -500){
-      P.placeAt(clamp(P.x, 40, VW - 40), -50); P.fall({ v: [0, 200] }); P.reflex = null; say('I\'m back', 1200);
+      P.placeAt(clamp(P.x, 40, VW - 40), Math.max(-20, topLimit - 90)); P.fall({ v: [0, 100] }); P.reflex = null; say('I\'m back', 1200);
       return;
     }
     if (drag || reduce) return;
@@ -235,7 +237,7 @@
     if (!P.ready()) return;
     // on a block: a little bounce, then back home (a block scrolled under the header sends him home at once)
     if (P.surf !== rail){
-      if (P.y < topLimit + 20 || now > visitUntil){
+      if (P.y < topLimit + 20 || P.y > VH - 40 || now > visitUntil){
         if (P.idleNow()){
           const hop = Math.random() < 0.3 ? pick(visible().filter(f => f !== P.surf && Math.abs(f.y - P.y) < 300)) : null;
           if (hop) visit(hop, rnd(-hop.hl * .6, hop.hl * .6)); else home();
@@ -257,7 +259,7 @@
     else if (roll < 0.65) P.runTo(rnd(-rail.hl * .9, rail.hl * .9));
     else if (roll < 0.75){ P.sit(); next = now + rnd(4000, 8000); }
     else if (roll < 0.83) P.play('yawn', 1300);
-    else if (roll < 0.92){ P.play('arms', 900); say(pick(['hi!', 'psst', 'drag me', 'click a title', 'hello'])); }
+    else if (roll < 0.92){ P.play('arms', 900); say(pick(['hi!', 'psst', 'drag me', touch ? 'tap a title' : 'click a title', 'hello'])); }
     else P.play('lookdown', 1600);
   }
 
@@ -272,7 +274,7 @@
       P.placeAt(r.left + Math.min(r.width * .55, 260), topLimit + 4); P.fall({ v: [0, 80] });
       visitUntil = now + 4200;
       setTimeout(() => { P.play('arms', 1400); P.say('hearts'); say('hi! I\'m Dotto', 2400); }, 900);
-      setTimeout(() => { if (!sleeping && P.surf === rail) say('drag me, or click a title', 2200); }, 6500);
+      setTimeout(() => { if (!sleeping && P.surf === rail) say(touch ? 'drag me, or tap a title' : 'drag me, or click a title', 2200); }, 6500);
       return;
     }
     const x = saved ? clamp(saved.x, 30, VW - 30) : VW * 0.8;
@@ -297,8 +299,8 @@
     ctx.clearRect(0, 0, VW, VH);
     W.draw(1, now); W.drawFront(1);
     ctx.globalAlpha = 1;
-    const c = P.center(), hx = Math.round(c[0]), hy = Math.round(c[1] - P.p * 9);
-    if (hx !== bx || hy !== by){ bub.style.transform = `translate(${hx}px, ${hy}px) translate(-50%, -100%)`; bx = hx; by = hy; }
+    const c = P.center(), bw = bub.offsetWidth || 0, hx = Math.round(clamp(c[0], bw / 2 + 8, VW - bw / 2 - 8)), hy = Math.round(Math.max(c[1] - P.p * 9, bub.offsetHeight + 6));
+    if (hx !== bx || hy !== by){ bub.style.transform = `translate(${hx}px, ${hy}px) translate(-50%, -100%)`; bub.style.setProperty('--tail', clamp(50 + (c[0] - hx) / Math.max(1, bw) * 100, 12, 88).toFixed(1) + '%'); bx = hx; by = hy; }
     if (now > bubUntil && bub.classList.contains('on')) bub.classList.remove('on');
     raf = reduce ? 0 : requestAnimationFrame(frame);
   }
